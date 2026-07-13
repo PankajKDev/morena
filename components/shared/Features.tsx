@@ -37,6 +37,7 @@ const features: Feature[] = [
 const FeatureCard = ({ title, icon: Icon, span }: Feature) => {
   return (
     <div
+      id="features"
       className={cn(
         "group relative flex flex-col justify-between rounded-2xl border bg-card p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:border-primary/30",
         span === "col" && "sm:col-span-2",

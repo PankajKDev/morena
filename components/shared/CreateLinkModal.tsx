@@ -14,30 +14,47 @@ function sanitize(input: string): string {
   return input.replace(/<[^>]*>/g, "").trim();
 }
 
+const URL_PATTERN = /^[a-zA-Z]+$/;
+
 const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
   const router = useRouter();
-  const [value, setValue] = useState("");
+  const [name, setName] = useState("");
+  const [url, setUrl] = useState("");
   const [error, setError] = useState("");
   const setLinkPageName = useProfile((s) => s.setLinkPageName);
+  const setPageUrl = useProfile((s) => s.setPageUrl);
 
   if (!open) return null;
 
   const handleSubmit = () => {
-    const cleaned = sanitize(value);
+    const cleanedName = sanitize(name);
+    const cleanedUrl = sanitize(url);
 
-    if (!cleaned) {
-      setError("Name cannot be empty");
+    if (!cleanedName) {
+      setError("Page name cannot be empty");
       return;
     }
 
-    if (cleaned.length > 100) {
-      setError("Name must be 100 characters or less");
+    if (cleanedName.length > 100) {
+      setError("Page name must be 100 characters or less");
       return;
     }
 
-    setLinkPageName(cleaned);
+    if (!cleanedUrl) {
+      setError("Page URL cannot be empty");
+      return;
+    }
+
+    if (!URL_PATTERN.test(cleanedUrl)) {
+      setError("Page URL must start with a letter and contain only letters");
+      return;
+    }
+
+    setLinkPageName(cleanedName);
+    setPageUrl(cleanedUrl);
     setError("");
-    setValue("");
+    setName("");
+    setUrl("");
     onClose();
     router.push("/create/linkpage");
   };
@@ -55,22 +72,32 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
           </button>
         </div>
 
-        <div className="p-4 space-y-4">
+          <div className="p-4 space-y-4">
           <div className="space-y-2">
             <label className="text-sm font-medium">Page name</label>
             <input
               type="text"
-              value={value}
+              value={name}
               onChange={(e) => {
-                setValue(e.target.value);
+                setName(e.target.value);
                 setError("");
               }}
               placeholder="e.g. My Links"
               maxLength={100}
               className="w-full px-3 py-2.5 rounded-xl border border-input bg-white text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all duration-200"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSubmit();
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Page URL</label>
+            <input
+              type="text"
+              value={url}
+              onChange={(e) => {
+                setUrl(e.target.value);
+                setError("");
               }}
+              placeholder="e.g. mylinks"
+              className="w-full px-3 py-2.5 rounded-xl border border-input bg-white text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all duration-200"
             />
             {error && <p className="text-xs text-destructive">{error}</p>}
           </div>

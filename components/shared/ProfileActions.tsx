@@ -42,6 +42,7 @@ const ProfileActions = () => {
       linkPageName,
       displayName,
       avatar,
+      pageUrl,
       bio,
       links,
       bodyBgImage,
@@ -77,6 +78,7 @@ const ProfileActions = () => {
       },
       body: JSON.stringify({
         linkPageName,
+        pageUrl,
         displayName,
         bio,
         avatar,

@@ -1,13 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, ExternalLink } from "lucide-react";
 import { CreateLinkModal } from "@/components/shared/CreateLinkModal";
+import { useAuth, useUser } from "@clerk/nextjs";
+import Link from "next/link";
 
-const MOCK_PAGES = [
-  { id: "1", name: "Personal", createdAt: "2025-12-01T10:00:00Z", updatedAt: "2026-01-15T14:30:00Z" },
-  { id: "2", name: "Business", createdAt: "2026-02-10T08:00:00Z", updatedAt: "2026-06-20T16:00:00Z" },
-];
+interface LinkPage {
+  id: string;
+  linkPagename: string;
+  pageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString("en-US", {
@@ -19,7 +24,29 @@ function formatDate(iso: string): string {
 
 const LinkPageCard = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [pages, setPages] = useState<LinkPage[]>([]);
+  const { user } = useUser();
+  const userId = user?.id;
+  useEffect(() => {
+    if (!userId) return;
+    async function fetchData() {
+      const res = await fetch("/api/links", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      });
+      const json = await res.json();
+      console.log(json);
+      if (res.ok) {
+        const list = Array.isArray(json) ? json : (json?.res ?? []);
+        setPages(list);
+      }
+    }
 
+    fetchData();
+  }, [userId]);
   return (
     <>
       <div className="rounded-2xl border border-border bg-card p-6 space-y-5">
@@ -35,28 +62,30 @@ const LinkPageCard = () => {
         </div>
 
         <div className="space-y-2.5">
-          {MOCK_PAGES.map((page) => (
+          {pages.map((page) => (
             <div
               key={page.id}
               className="flex items-center justify-between p-3.5 rounded-xl border border-border bg-background/50 hover:bg-accent/50 transition-colors"
             >
               <div className="space-y-0.5">
-                <p className="text-sm font-semibold">{page.name}</p>
+                <p className="text-sm font-semibold">{page.linkPagename}</p>
                 <p className="text-xs text-muted-foreground">
                   Created {formatDate(page.createdAt)} · Updated{" "}
                   {formatDate(page.updatedAt)}
                 </p>
               </div>
-              <ExternalLink size={16} className="text-muted-foreground shrink-0" />
+              <Link href={`/profile/${user?.username}/${page.pageUrl}`}>
+                <ExternalLink
+                  size={16}
+                  className="text-muted-foreground shrink-0"
+                />
+              </Link>
             </div>
           ))}
         </div>
       </div>
 
-      <CreateLinkModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-      />
+      <CreateLinkModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );
 };

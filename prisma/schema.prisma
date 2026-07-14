@@ -26,6 +26,7 @@ model User{
 model Pagelink{
 id String @id @default(uuid())
 linkPagename String
+pageUrl String @unique
 displayName String
 bio String?
 avatar String?

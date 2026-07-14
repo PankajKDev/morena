@@ -7,6 +7,7 @@ export interface LinkEntry {
 
 interface ProfileDataState {
   linkPageName: string;
+  pageUrl: string;
   displayName: string;
   avatar: string | null;
   bio: string;
@@ -34,6 +35,7 @@ interface ProfileDataState {
 
 interface ProfileDataActions {
   setLinkPageName: (v: string) => void;
+  setPageUrl: (v: string) => void;
   setDisplayName: (v: string) => void;
   setAvatar: (v: string | null) => void;
   setAvatarFile: (file: File | null) => Promise<void>;
@@ -68,6 +70,7 @@ type ProfileStore = ProfileDataState & ProfileDataActions;
 
 const DEFAULTS: ProfileDataState = {
   linkPageName: "a very cool name",
+  pageUrl: "",
   displayName: "",
   avatar: null,
   bio: "",
@@ -104,6 +107,7 @@ const fileToBase64 = (file: File): Promise<string> =>
 export const useProfileDataStore = create<ProfileStore>()((set) => ({
   ...DEFAULTS,
   setLinkPageName: (v) => void set({ linkPageName: v }),
+  setPageUrl: (v) => void set({ pageUrl: v }),
   setDisplayName: (v) => void set({ displayName: v }),
   setAvatar: (v) => void set({ avatar: v }),
   setAvatarFile: async (file) => {

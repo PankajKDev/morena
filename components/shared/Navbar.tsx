@@ -39,8 +39,8 @@ const Navbar = () => {
             <Link href="/integrations" className={navLinkClass}>
               Integrations
             </Link>
-            <Link href="/create/linkpage" className={navLinkClass}>
-              Create
+            <Link href="/links" className={navLinkClass}>
+              Links
             </Link>
           </div>
         </Show>
@@ -159,12 +159,12 @@ const Navbar = () => {
               Integrations
             </MobileLink>
             <MobileLink
-              href="/create/linkpage"
+              href="/links"
               index={2}
               visible={mobileOpen}
               onClick={() => setMobileOpen(false)}
             >
-              Create
+              Links
             </MobileLink>
           </Show>
         </div>

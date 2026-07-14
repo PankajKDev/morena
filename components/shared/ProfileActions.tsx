@@ -3,6 +3,7 @@
 import { useProfileDataStore } from "@/stores/profileDataStore";
 import { uploadBase64 } from "@/lib/cloudinary";
 import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const IMAGE_FIELDS = [
   "avatar",
@@ -17,7 +18,7 @@ function isBase64(v: string | null): v is string {
 
 const ProfileActions = () => {
   const { userId } = useAuth();
-
+  const router = useRouter();
   const reset = useProfileDataStore((s) => s.reset);
 
   const handleSubmit = async () => {
@@ -91,7 +92,8 @@ const ProfileActions = () => {
       }),
     });
     if (res.ok) {
-      alert("page created");
+      reset();
+      router.push("/links");
     }
   };
 

@@ -26,7 +26,11 @@ model User{
 model Pagelink{
 id String @id @default(uuid())
 name String
-url String
+avatar String?
+bodyBgImage String?
+profileBgImage String?
+linkBgImage String?
+customTheme Json
 creator User @relation(fields: [ownerId],references: [clerkId],onDelete: Cascade)
 ownerId String
 createdAt DateTime @default(now())

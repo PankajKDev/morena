@@ -25,14 +25,26 @@ model User{
 
 model Pagelink{
 id String @id @default(uuid())
-name String
+linkPagename String
+displayName String
+bio String?
 avatar String?
 bodyBgImage String?
 profileBgImage String?
 linkBgImage String?
 customTheme Json
+userlinks UserLink[]
 creator User @relation(fields: [ownerId],references: [clerkId],onDelete: Cascade)
 ownerId String
 createdAt DateTime @default(now())
 updatedAt DateTime @updatedAt
+}
+
+model UserLink{
+  id String @id @default(uuid())
+  name String
+  url String
+  pageId String
+  totalClicks Int @default(0)
+  page Pagelink @relation(fields: [pageId],references: [id],onDelete: Cascade)
 }

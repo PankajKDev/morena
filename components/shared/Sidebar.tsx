@@ -75,20 +75,19 @@ const Sidebar = () => {
   const setLinkFontFamily = useProfile((s) => s.setLinkFontFamily);
 
   const addLink = () => {
-    const id = crypto.randomUUID();
-    setLinks([...links, { id, name: "", url: "" }]);
+    setLinks([...links, { name: "", url: "" }]);
   };
 
-  const updateLink = (id: string, field: "name" | "url", value: string) => {
+  const updateLink = (index: number, field: "name" | "url", value: string) => {
     setLinks(
-      links.map((link) =>
-        link.id === id ? { ...link, [field]: value } : link
+      links.map((link, i) =>
+        i === index ? { ...link, [field]: value } : link
       )
     );
   };
 
-  const removeLink = (id: string) => {
-    setLinks(links.filter((link) => link.id !== id));
+  const removeLink = (index: number) => {
+    setLinks(links.filter((_, i) => i !== index));
   };
 
   const tabs: { key: Tab; label: string; icon: typeof User }[] = [
@@ -208,13 +207,13 @@ const Sidebar = () => {
                       No links added yet.
                     </p>
                   )}
-                  {links.map((link) => (
+                  {links.map((link, index) => (
                     <div
-                      key={link.id}
+                      key={index}
                       className="relative p-3 rounded-xl border border-input bg-background space-y-2"
                     >
                       <button
-                        onClick={() => removeLink(link.id)}
+                        onClick={() => removeLink(index)}
                         className="absolute top-2 right-2 text-muted-foreground hover:text-destructive transition-colors"
                         aria-label="Remove link"
                       >
@@ -229,7 +228,7 @@ const Sidebar = () => {
                           type="text"
                           value={link.name}
                           onChange={(e) =>
-                            updateLink(link.id, "name", e.target.value)
+                            updateLink(index, "name", e.target.value)
                           }
                           placeholder="Link name"
                           className="flex-1 px-2 py-1.5 rounded-lg border border-input bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all duration-200"
@@ -239,7 +238,7 @@ const Sidebar = () => {
                         type="url"
                         value={link.url}
                         onChange={(e) =>
-                          updateLink(link.id, "url", e.target.value)
+                          updateLink(index, "url", e.target.value)
                         }
                         placeholder="https://example.com"
                         className="w-full px-2 py-1.5 rounded-lg border border-input bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all duration-200"

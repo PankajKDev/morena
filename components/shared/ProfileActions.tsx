@@ -2,7 +2,7 @@
 
 import { useProfileDataStore } from "@/stores/profileDataStore";
 import { uploadBase64 } from "@/lib/cloudinary";
-import { prisma } from "@/lib/prisma";
+import { useAuth } from "@clerk/nextjs";
 
 const IMAGE_FIELDS = [
   "avatar",
@@ -16,6 +16,8 @@ function isBase64(v: string | null): v is string {
 }
 
 const ProfileActions = () => {
+  const { userId } = useAuth();
+
   const reset = useProfileDataStore((s) => s.reset);
 
   const handleSubmit = async () => {
@@ -36,10 +38,59 @@ const ProfileActions = () => {
     await Promise.all(uploads);
 
     const final = useProfileDataStore.getState();
-    const { displayName, avatar, bio, links, ...css } = final;
+    const {
+      linkPageName,
+      displayName,
+      avatar,
+      bio,
+      links,
+      bodyBgImage,
+      profileBgImage,
+      linkBgImage,
+    } = final;
+
+    const customTheme = {
+      bodyBg: final.bodyBg,
+      bodyBgBlur: final.bodyBgBlur,
+      bodyBgOpacity: final.bodyBgOpacity,
+      profileBg: final.profileBg,
+      profileBgBlur: final.profileBgBlur,
+      profileBgOpacity: final.profileBgOpacity,
+      textColor: final.textColor,
+      headingColor: final.headingColor,
+      fontSize: final.fontSize,
+      nameFontSize: final.nameFontSize,
+      fontFamily: final.fontFamily,
+      linkBg: final.linkBg,
+      linkBgBlur: final.linkBgBlur,
+      linkBgOpacity: final.linkBgOpacity,
+      linkColor: final.linkColor,
+      linkFontFamily: final.linkFontFamily,
+    };
 
     // DB logic goes here
-    console.log({ displayName, avatar, bio, links, css });
+    console.log({ displayName, avatar, bio, links, customTheme });
+    const res = await fetch("/api/create-link", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        linkPageName,
+        displayName,
+        bio,
+        avatar,
+        bodyBgImage,
+        profileBgImage,
+        linkBgImage,
+        userId,
+        customTheme,
+        links,
+      }),
+    });
+    if (res.ok) {
+      alert("page created");
+    }
   };
 
   return (

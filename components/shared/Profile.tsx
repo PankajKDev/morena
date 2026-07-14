@@ -158,11 +158,11 @@ const Profile = () => {
             {links.length > 0 && (
               <div className="w-full pt-3 space-y-3">
                 {links.map(
-                  (link) =>
+                  (link, index) =>
                     link.name &&
                     link.url && (
                       <a
-                        key={link.id}
+                        key={index}
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"

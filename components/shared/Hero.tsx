@@ -37,12 +37,6 @@ const Hero = () => {
             >
               Get Started (it&apos;s free)
             </Link>
-            <Link
-              href="/pricing"
-              className="inline-flex h-12 items-center justify-center rounded-xl border-2 border-primary/20 bg-transparent px-8 text-base font-bold transition-all hover:bg-primary/5 active:scale-95"
-            >
-              See Pricing
-            </Link>
           </div>
 
           {/* Visual Hook / Placeholder for Phone Mockup */}

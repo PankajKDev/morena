@@ -11,7 +11,12 @@ interface ImageCropModalProps {
   onCancel: () => void;
 }
 
-const ImageCropModal = ({ open, image, onConfirm, onCancel }: ImageCropModalProps) => {
+const ImageCropModal = ({
+  open,
+  image,
+  onConfirm,
+  onCancel,
+}: ImageCropModalProps) => {
   const [crop, setCrop] = useState(0);
   const [zoom, setZoom] = useState(100);
 
@@ -45,7 +50,7 @@ const ImageCropModal = ({ open, image, onConfirm, onCancel }: ImageCropModalProp
   const overlayOpacity = 0.5;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="w-full max-w-lg rounded-3xl border border-white/10 bg-white/90 backdrop-blur-xl shadow-2xl overflow-hidden">
         <div className="flex items-center justify-between p-4 border-b border-black/5">
           <h2 className="text-lg font-bold tracking-tight">Adjust image</h2>
@@ -58,7 +63,8 @@ const ImageCropModal = ({ open, image, onConfirm, onCancel }: ImageCropModalProp
         </div>
 
         <div className="p-4 space-y-4">
-          <div className="relative rounded-2xl overflow-hidden bg-black/5 flex items-center justify-center"
+          <div
+            className="relative rounded-2xl overflow-hidden bg-black/5 flex items-center justify-center"
             style={{ aspectRatio: "4 / 3" }}
           >
             <NextImage
@@ -121,7 +127,6 @@ const ImageCropModal = ({ open, image, onConfirm, onCancel }: ImageCropModalProp
               {zoom}%
             </span>
           </div>
-
         </div>
 
         <div className="flex gap-3 p-4 border-t border-black/5">

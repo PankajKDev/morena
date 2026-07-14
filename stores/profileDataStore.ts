@@ -1,13 +1,12 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 export interface LinkEntry {
-  id: string;
   name: string;
   url: string;
 }
 
 interface ProfileDataState {
+  linkPageName: string;
   displayName: string;
   avatar: string | null;
   bio: string;
@@ -34,6 +33,7 @@ interface ProfileDataState {
 }
 
 interface ProfileDataActions {
+  setLinkPageName: (v: string) => void;
   setDisplayName: (v: string) => void;
   setAvatar: (v: string | null) => void;
   setAvatarFile: (file: File | null) => Promise<void>;
@@ -67,6 +67,7 @@ interface ProfileDataActions {
 type ProfileStore = ProfileDataState & ProfileDataActions;
 
 const DEFAULTS: ProfileDataState = {
+  linkPageName: "a very cool name",
   displayName: "",
   avatar: null,
   bio: "",
@@ -100,39 +101,43 @@ const fileToBase64 = (file: File): Promise<string> =>
     reader.readAsDataURL(file);
   });
 
-export const useProfileDataStore = create<ProfileStore>()(
-  persist(
-    (set) => ({
-      ...DEFAULTS,
-      setDisplayName: (v) => void set({ displayName: v }),
-      setAvatar: (v) => void set({ avatar: v }),
-      setAvatarFile: async (file) => { set({ avatar: file ? await fileToBase64(file) : null }); },
-      setBio: (v) => void set({ bio: v }),
-      setLinks: (v) => void set({ links: v }),
-      setBodyBg: (v) => void set({ bodyBg: v }),
-      setBodyBgImage: (v) => void set({ bodyBgImage: v }),
-      setBodyBgImageFile: async (file) => { set({ bodyBgImage: file ? await fileToBase64(file) : null }); },
-      setBodyBgBlur: (v) => void set({ bodyBgBlur: v }),
-      setBodyBgOpacity: (v) => void set({ bodyBgOpacity: v }),
-      setProfileBg: (v) => void set({ profileBg: v }),
-      setProfileBgImage: (v) => void set({ profileBgImage: v }),
-      setProfileBgImageFile: async (file) => { set({ profileBgImage: file ? await fileToBase64(file) : null }); },
-      setProfileBgBlur: (v) => void set({ profileBgBlur: v }),
-      setProfileBgOpacity: (v) => void set({ profileBgOpacity: v }),
-      setTextColor: (v) => void set({ textColor: v }),
-      setHeadingColor: (v) => void set({ headingColor: v }),
-      setFontSize: (v) => void set({ fontSize: v }),
-      setNameFontSize: (v) => void set({ nameFontSize: v }),
-      setFontFamily: (v) => void set({ fontFamily: v }),
-      setLinkBg: (v) => void set({ linkBg: v }),
-      setLinkBgImage: (v) => void set({ linkBgImage: v }),
-      setLinkBgImageFile: async (file) => { set({ linkBgImage: file ? await fileToBase64(file) : null }); },
-      setLinkBgBlur: (v) => void set({ linkBgBlur: v }),
-      setLinkBgOpacity: (v) => void set({ linkBgOpacity: v }),
-      setLinkColor: (v) => void set({ linkColor: v }),
-      setLinkFontFamily: (v) => void set({ linkFontFamily: v }),
-      reset: () => void set(DEFAULTS),
-    }),
-    { name: "profile-data-store" },
-  ),
-);
+export const useProfileDataStore = create<ProfileStore>()((set) => ({
+  ...DEFAULTS,
+  setLinkPageName: (v) => void set({ linkPageName: v }),
+  setDisplayName: (v) => void set({ displayName: v }),
+  setAvatar: (v) => void set({ avatar: v }),
+  setAvatarFile: async (file) => {
+    set({ avatar: file ? await fileToBase64(file) : null });
+  },
+  setBio: (v) => void set({ bio: v }),
+  setLinks: (v) => void set({ links: v }),
+  setBodyBg: (v) => void set({ bodyBg: v }),
+  setBodyBgImage: (v) => void set({ bodyBgImage: v }),
+  setBodyBgImageFile: async (file) => {
+    set({ bodyBgImage: file ? await fileToBase64(file) : null });
+  },
+  setBodyBgBlur: (v) => void set({ bodyBgBlur: v }),
+  setBodyBgOpacity: (v) => void set({ bodyBgOpacity: v }),
+  setProfileBg: (v) => void set({ profileBg: v }),
+  setProfileBgImage: (v) => void set({ profileBgImage: v }),
+  setProfileBgImageFile: async (file) => {
+    set({ profileBgImage: file ? await fileToBase64(file) : null });
+  },
+  setProfileBgBlur: (v) => void set({ profileBgBlur: v }),
+  setProfileBgOpacity: (v) => void set({ profileBgOpacity: v }),
+  setTextColor: (v) => void set({ textColor: v }),
+  setHeadingColor: (v) => void set({ headingColor: v }),
+  setFontSize: (v) => void set({ fontSize: v }),
+  setNameFontSize: (v) => void set({ nameFontSize: v }),
+  setFontFamily: (v) => void set({ fontFamily: v }),
+  setLinkBg: (v) => void set({ linkBg: v }),
+  setLinkBgImage: (v) => void set({ linkBgImage: v }),
+  setLinkBgImageFile: async (file) => {
+    set({ linkBgImage: file ? await fileToBase64(file) : null });
+  },
+  setLinkBgBlur: (v) => void set({ linkBgBlur: v }),
+  setLinkBgOpacity: (v) => void set({ linkBgOpacity: v }),
+  setLinkColor: (v) => void set({ linkColor: v }),
+  setLinkFontFamily: (v) => void set({ linkFontFamily: v }),
+  reset: () => void set(DEFAULTS),
+}));

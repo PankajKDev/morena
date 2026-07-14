@@ -29,14 +29,7 @@ const Footer = () => {
                   Features
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/pricing"
-                  className="hover:text-primary transition-colors"
-                >
-                  Pricing
-                </Link>
-              </li>
+
               <li>
                 <Link
                   href="/guide"

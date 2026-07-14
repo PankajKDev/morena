@@ -55,9 +55,7 @@ export async function POST(req: NextRequest) {
       case "user.deleted": {
         const user = evt.data;
         const clerkId = user.id;
-
         await prisma.user.deleteMany({ where: { clerkId: clerkId } });
-
         break;
       }
     }

@@ -42,9 +42,6 @@ const Navbar = () => {
             <Link href="/create/linkpage" className={navLinkClass}>
               Create
             </Link>
-            <Link href="/pricing" className={navLinkClass}>
-              Pricing
-            </Link>
           </div>
         </Show>
 
@@ -168,14 +165,6 @@ const Navbar = () => {
               onClick={() => setMobileOpen(false)}
             >
               Create
-            </MobileLink>
-            <MobileLink
-              href="/pricing"
-              index={3}
-              visible={mobileOpen}
-              onClick={() => setMobileOpen(false)}
-            >
-              Pricing
             </MobileLink>
           </Show>
         </div>

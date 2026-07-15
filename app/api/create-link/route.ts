@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { MappedLink } from "@/types";
 
 export async function POST(req: Request) {
   const {
@@ -83,7 +84,7 @@ export async function PATCH(req: Request) {
         customTheme,
         userlinks: {
           deleteMany: {},
-          create: links.map((link) => ({
+          create: links.map((link: MappedLink) => ({
             name: link.name,
             url: link.url,
             totalClicks: link.totalClicks,

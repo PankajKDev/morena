@@ -41,3 +41,24 @@ export interface ProfileCardData {
 export interface ProfileCardProps {
   data?: ProfileCardData;
 }
+
+export type MappedLink = {
+  name: string;
+  url: string;
+  totalClicks: number;
+};
+
+export interface IProfileHydratorData {
+  id: string;
+  linkPagename: string;
+  pageUrl: string;
+  displayName: string;
+  bio: string | null;
+  avatar: string | null;
+  bodyBgImage: string | null;
+  profileBgImage: string | null;
+  linkBgImage: string | null;
+  customTheme: ProfileCardTheme;
+  userlinks: { name: string; url: string; totalClicks: number }[];
+  ownerId: string;
+}

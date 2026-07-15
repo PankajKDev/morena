@@ -2,17 +2,11 @@
 
 import { useEffect } from "react";
 import { useProfileDataStore } from "@/stores/profileDataStore";
-import type { ProfileCardData, ProfileCardTheme } from "@/types";
+import type { IProfileHydratorData, ProfileCardTheme } from "@/types";
 import { Profile } from "./Profile";
 
-interface PrismaPageData extends Omit<ProfileCardData, "customTheme"> {
-  linkPagename: string;
-  pageUrl: string;
-  customTheme: ProfileCardTheme;
-}
-
 interface ProfileHydratorProps {
-  data: PrismaPageData;
+  data: IProfileHydratorData;
 }
 
 function mapTheme(t: ProfileCardTheme) {

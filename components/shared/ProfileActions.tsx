@@ -4,6 +4,7 @@ import { useProfileDataStore } from "@/stores/profileDataStore";
 import { uploadBase64 } from "@/lib/cloudinary";
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { isBase64 } from "@/lib/utils";
 
 const IMAGE_FIELDS = [
   "avatar",
@@ -11,10 +12,6 @@ const IMAGE_FIELDS = [
   "profileBgImage",
   "linkBgImage",
 ] as const;
-
-function isBase64(v: string | null): v is string {
-  return v !== null && v.startsWith("data:");
-}
 
 const ProfileActions = () => {
   const { userId } = useAuth();

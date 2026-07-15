@@ -1,6 +1,6 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
 
-const publicRoutes = ["/sign-in", "/sign-up", "/about", "/", "/api/webhooks"];
+const publicRoutes = ["/sign-in", "/sign-up", "/about", "/", "/api/webhooks","/profile"];
 
 export default clerkMiddleware(
   async (auth, req) => {

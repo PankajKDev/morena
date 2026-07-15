@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => {
@@ -39,16 +40,15 @@ const Hero = () => {
             </Link>
           </div>
 
-          {/* Visual Hook / Placeholder for Phone Mockup */}
-          <div className="relative mt-16 w-full max-w-2xl aspect-video rounded-3xl border-2 border-dashed border-muted-foreground/20 bg-muted/30 flex items-center justify-center group overflow-hidden">
-            <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-accent/5 opacity-50" />
-            <p className="text-muted-foreground font-medium group-hover:text-primary transition-colors">
-              [ Insanely aesthetic dashboard preview goes here ]
-            </p>
-
-            {/* Quirky floating elements */}
-            <div className="absolute -top-4 -right-4 h-12 w-12 rounded-full bg-primary/20 animate-pulse" />
-            <div className="absolute -bottom-6 -left-6 h-20 w-20 rounded-full bg-accent/20 animate-bounce-slow" />
+          {/* Dashboard Preview */}
+          <div className="relative mt-16 w-full max-w-2xl aspect-video rounded-3xl overflow-hidden shadow-2xl">
+            <Image
+              src="/demo-profile.png"
+              alt="Dashboard preview"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
 
           {/* Trust bit */}

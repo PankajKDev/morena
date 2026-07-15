@@ -1,59 +1,99 @@
-"use client";
-
 import Image from "next/image";
-import { useProfile } from "@/components/shared/profile-context";
-import { Link as LinkIcon } from "lucide-react";
-import { getBodyBgStyle, getProfileBgStyle, getLinkStyle } from "@/lib/styleutils";
+import {
+  getBodyBgStyle,
+  getProfileBgStyle,
+  getLinkStyle,
+} from "@/lib/styleutils";
 import { hexToRgba } from "@/lib/utils";
+import { ProfileCardData, ProfileCardProps } from "@/types";
+import { Link as LinkIcon } from "lucide-react";
 
-const Profile = () => {
+const MOCK_DATA: ProfileCardData = {
+  displayName: "Jacket",
+  bio: "i love hotline miami and baseball bats",
+  avatar:
+    "https://res.cloudinary.com/dskcyas06/image/upload/v1784056986/morena/qwikaal0hztsleyobpya.jpg",
+  bodyBgImage:
+    "https://res.cloudinary.com/dskcyas06/image/upload/v1784056988/morena/qq1twtstqrvmintnltjc.jpg",
+  profileBgImage:
+    "https://res.cloudinary.com/dskcyas06/image/upload/v1784056986/morena/polmri9kmmgrwlodhv4x.webp",
+  linkBgImage:
+    "https://res.cloudinary.com/dskcyas06/image/upload/v1784056986/morena/iy3qgzexywja3k4ukcg9.png",
+  customTheme: {
+    bodyBg: "#ffffff",
+    bodyBgBlur: 2,
+    bodyBgOpacity: 55,
+    profileBg: "#000000",
+    profileBgBlur: 0,
+    profileBgOpacity: 95,
+    textColor: "#ffffff",
+    headingColor: "#ffffff",
+    fontSize: 17,
+    nameFontSize: 34,
+    fontFamily: "monospace",
+    linkBg: "#000000",
+    linkBgBlur: 6,
+    linkBgOpacity: 0,
+    linkColor: "#ffffff",
+    linkFontFamily: "sans-serif",
+  },
+  userlinks: [
+    { name: "Portfolio", url: "https://jacket.dev" },
+    { name: "Twitter", url: "https://twitter.com/jacket" },
+  ],
+};
+
+const ProfileCard = ({ data = MOCK_DATA }: ProfileCardProps) => {
   const {
-    displayName, avatar, bio, links,
-    bodyBg, bodyBgImage, bodyBgBlur, bodyBgOpacity,
-    profileBg, profileBgImage, profileBgBlur, profileBgOpacity,
-    textColor, headingColor, fontSize, nameFontSize, fontFamily,
-    linkBg, linkBgImage, linkBgBlur, linkBgOpacity, linkColor, linkFontFamily,
-  } = useProfile();
+    displayName,
+    bio,
+    avatar,
+    bodyBgImage,
+    profileBgImage,
+    linkBgImage,
+    customTheme: t,
+    userlinks = [],
+  } = data;
 
   return (
     <div
       className="relative flex min-h-screen items-center justify-center overflow-hidden p-4 md:p-8"
       style={{
-        ...getBodyBgStyle(bodyBg, bodyBgImage),
-        color: textColor,
-        fontSize: `${fontSize}px`,
+        ...getBodyBgStyle(t.bodyBg, bodyBgImage),
+        color: t.textColor,
+        fontSize: `${t.fontSize}px`,
       }}
     >
       <div
         className="absolute inset-0"
         style={{
-          backdropFilter: `blur(${bodyBgBlur}px)`,
-          WebkitBackdropFilter: `blur(${bodyBgBlur}px)`,
-          opacity: bodyBgOpacity / 100,
+          backdropFilter: `blur(${t.bodyBgBlur}px)`,
+          WebkitBackdropFilter: `blur(${t.bodyBgBlur}px)`,
+          opacity: t.bodyBgOpacity / 100,
         }}
       />
 
       <div
         className="relative z-10 w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden animate-in fade-in duration-500"
         style={{
-          ...getProfileBgStyle(profileBg, profileBgImage),
-          color: textColor,
-          boxShadow: `0 25px 50px -12px ${hexToRgba(profileBg, 0.4)}`,
+          ...getProfileBgStyle(t.profileBg, profileBgImage),
+          color: t.textColor,
+          boxShadow: `0 25px 50px -12px ${hexToRgba(t.profileBg, 0.4)}`,
         }}
       >
         <div
           className="absolute inset-0"
           style={{
-            backdropFilter: `blur(${profileBgBlur}px)`,
-            WebkitBackdropFilter: `blur(${profileBgBlur}px)`,
-            opacity: profileBgOpacity / 100,
+            backdropFilter: `blur(${t.profileBgBlur}px)`,
+            WebkitBackdropFilter: `blur(${t.profileBgBlur}px)`,
+            opacity: t.profileBgOpacity / 100,
           }}
         />
 
         <div
           className="absolute top-0 left-0 right-0 h-32 rounded-t-3xl pointer-events-none"
           style={{
-            background: `linear-gradient(180deg, ${hexToRgba(textColor, 0.06)}, transparent)`,
+            background: `linear-gradient(180deg, ${hexToRgba(t.textColor, 0.06)}, transparent)`,
           }}
         />
 
@@ -63,19 +103,19 @@ const Profile = () => {
               <div
                 className="absolute -inset-1 rounded-full opacity-40 blur-sm"
                 style={{
-                  background: `linear-gradient(135deg, ${headingColor}, ${textColor})`,
+                  background: `linear-gradient(135deg, ${t.headingColor}, ${t.textColor})`,
                 }}
               />
               <div className="size-24 rounded-full border-[3px] border-white/60 overflow-hidden shadow-xl bg-muted/50 shrink-0 relative">
-                  {avatar ? (
-                    <Image
-                      src={avatar}
-                      alt="Avatar"
-                      fill
-                      className="object-cover"
-                      unoptimized
-                    />
-                  ) : (
+                {avatar ? (
+                  <Image
+                    src={avatar}
+                    alt="Avatar"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                ) : (
                   <div className="size-full flex items-center justify-center bg-linear-to-br from-muted to-muted/50 text-muted-foreground text-2xl font-bold">
                     ?
                   </div>
@@ -87,9 +127,9 @@ const Profile = () => {
               <h1
                 className="font-extrabold tracking-tight leading-tight"
                 style={{
-                  color: headingColor,
-                  fontSize: `${nameFontSize}px`,
-                  fontFamily,
+                  color: t.headingColor,
+                  fontSize: `${t.nameFontSize}px`,
+                  fontFamily: t.fontFamily,
                   textShadow: "0 1px 3px rgba(0,0,0,0.12)",
                 }}
               >
@@ -101,8 +141,8 @@ const Profile = () => {
               <p
                 className="leading-relaxed max-w-sm"
                 style={{
-                  color: textColor,
-                  fontFamily,
+                  color: t.textColor,
+                  fontFamily: t.fontFamily,
                   opacity: 0.8,
                   textShadow: "0 1px 2px rgba(0,0,0,0.10)",
                 }}
@@ -111,9 +151,9 @@ const Profile = () => {
               </p>
             )}
 
-            {links.length > 0 && (
+            {userlinks.length > 0 && (
               <div className="w-full pt-3 space-y-3">
-                {links.map(
+                {userlinks.map(
                   (link, index) =>
                     link.name &&
                     link.url && (
@@ -123,31 +163,35 @@ const Profile = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="group relative flex items-center gap-3 w-full px-5 py-3.5 rounded-2xl border border-white/20 overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:shadow-xl active:scale-[0.98]"
-                        style={getLinkStyle(linkBg, linkBgImage, linkBgOpacity)}
+                        style={getLinkStyle(
+                          t.linkBg,
+                          linkBgImage,
+                          t.linkBgOpacity,
+                        )}
                       >
                         <div
                           className="absolute inset-0 transition-opacity duration-300"
                           style={{
-                            backdropFilter: `blur(${linkBgBlur}px)`,
-                            WebkitBackdropFilter: `blur(${linkBgBlur}px)`,
+                            backdropFilter: `blur(${t.linkBgBlur}px)`,
+                            WebkitBackdropFilter: `blur(${t.linkBgBlur}px)`,
                           }}
                         />
                         <div
                           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                           style={{
-                            background: `linear-gradient(135deg, ${hexToRgba(textColor, 0.05)}, transparent)`,
+                            background: `linear-gradient(135deg, ${hexToRgba(t.textColor, 0.05)}, transparent)`,
                           }}
                         />
                         <LinkIcon
                           size={16}
                           className="shrink-0 relative z-10 transition-transform duration-300 group-hover:scale-110"
-                          style={{ color: linkColor, opacity: 0.7, textShadow: "0 1px 2px rgba(0,0,0,0.10)" }}
+                          style={{ color: t.linkColor, opacity: 0.7 }}
                         />
                         <span
                           className="font-semibold relative z-10 tracking-tight"
                           style={{
-                            color: linkColor,
-                            fontFamily: linkFontFamily,
+                            color: t.linkColor,
+                            fontFamily: t.linkFontFamily,
                             textShadow: "0 1px 2px rgba(0,0,0,0.10)",
                           }}
                         >
@@ -164,4 +208,5 @@ const Profile = () => {
     </div>
   );
 };
-export { Profile };
+
+export { ProfileCard };

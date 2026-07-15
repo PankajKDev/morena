@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { fileToBase64 } from "@/lib/utils";
 
 export interface LinkEntry {
   name: string;
@@ -95,14 +96,6 @@ const DEFAULTS: ProfileDataState = {
   linkColor: "#000000",
   linkFontFamily: "sans-serif",
 };
-
-const fileToBase64 = (file: File): Promise<string> =>
-  new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
 
 export const useProfileDataStore = create<ProfileStore>()((set) => ({
   ...DEFAULTS,

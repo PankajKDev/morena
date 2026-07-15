@@ -1,3 +1,5 @@
+import { ProfileCard } from "@/components/shared/ProfileCard";
+
 type PageProps = {
   params: {
     username: string;
@@ -6,4 +8,9 @@ type PageProps = {
 };
 export default async function page({ params }: PageProps) {
   const { username, pageurl } = await params;
+  return (
+    <div className="w-full h-full">
+      <ProfileCard />
+    </div>
+  );
 }

@@ -12,6 +12,8 @@ import {
   Plus,
 } from "lucide-react";
 import { useProfile } from "@/components/shared/profile-context";
+import { ImageUpload } from "@/components/shared/ImageUpload";
+import { fileToBase64 } from "@/lib/utils";
 
 type Tab = "details" | "css";
 
@@ -26,53 +28,18 @@ const Sidebar = () => {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<Tab>("details");
 
-  const displayName = useProfile((s) => s.displayName);
-  const avatar = useProfile((s) => s.avatar);
-  const bio = useProfile((s) => s.bio);
-  const links = useProfile((s) => s.links);
-  const bodyBg = useProfile((s) => s.bodyBg);
-  const bodyBgImage = useProfile((s) => s.bodyBgImage);
-  const bodyBgBlur = useProfile((s) => s.bodyBgBlur);
-  const bodyBgOpacity = useProfile((s) => s.bodyBgOpacity);
-  const profileBg = useProfile((s) => s.profileBg);
-  const profileBgImage = useProfile((s) => s.profileBgImage);
-  const profileBgBlur = useProfile((s) => s.profileBgBlur);
-  const profileBgOpacity = useProfile((s) => s.profileBgOpacity);
-  const textColor = useProfile((s) => s.textColor);
-  const headingColor = useProfile((s) => s.headingColor);
-  const fontSize = useProfile((s) => s.fontSize);
-  const nameFontSize = useProfile((s) => s.nameFontSize);
-  const fontFamily = useProfile((s) => s.fontFamily);
-  const linkBg = useProfile((s) => s.linkBg);
-  const linkBgImage = useProfile((s) => s.linkBgImage);
-  const linkBgBlur = useProfile((s) => s.linkBgBlur);
-  const linkBgOpacity = useProfile((s) => s.linkBgOpacity);
-  const linkColor = useProfile((s) => s.linkColor);
-  const linkFontFamily = useProfile((s) => s.linkFontFamily);
-
-  const setDisplayName = useProfile((s) => s.setDisplayName);
-  const setAvatar = useProfile((s) => s.setAvatar);
-  const setBio = useProfile((s) => s.setBio);
-  const setLinks = useProfile((s) => s.setLinks);
-  const setBodyBg = useProfile((s) => s.setBodyBg);
-  const setBodyBgImage = useProfile((s) => s.setBodyBgImage);
-  const setBodyBgBlur = useProfile((s) => s.setBodyBgBlur);
-  const setBodyBgOpacity = useProfile((s) => s.setBodyBgOpacity);
-  const setProfileBg = useProfile((s) => s.setProfileBg);
-  const setProfileBgImage = useProfile((s) => s.setProfileBgImage);
-  const setProfileBgBlur = useProfile((s) => s.setProfileBgBlur);
-  const setProfileBgOpacity = useProfile((s) => s.setProfileBgOpacity);
-  const setTextColor = useProfile((s) => s.setTextColor);
-  const setHeadingColor = useProfile((s) => s.setHeadingColor);
-  const setFontSize = useProfile((s) => s.setFontSize);
-  const setNameFontSize = useProfile((s) => s.setNameFontSize);
-  const setFontFamily = useProfile((s) => s.setFontFamily);
-  const setLinkBg = useProfile((s) => s.setLinkBg);
-  const setLinkBgImage = useProfile((s) => s.setLinkBgImage);
-  const setLinkBgBlur = useProfile((s) => s.setLinkBgBlur);
-  const setLinkBgOpacity = useProfile((s) => s.setLinkBgOpacity);
-  const setLinkColor = useProfile((s) => s.setLinkColor);
-  const setLinkFontFamily = useProfile((s) => s.setLinkFontFamily);
+  const {
+    displayName, avatar, bio, links,
+    bodyBg, bodyBgImage, bodyBgBlur, bodyBgOpacity,
+    profileBg, profileBgImage, profileBgBlur, profileBgOpacity,
+    textColor, headingColor, fontSize, nameFontSize, fontFamily,
+    linkBg, linkBgImage, linkBgBlur, linkBgOpacity, linkColor, linkFontFamily,
+    setDisplayName, setAvatar, setBio, setLinks,
+    setBodyBg, setBodyBgImage, setBodyBgBlur, setBodyBgOpacity,
+    setProfileBg, setProfileBgImage, setProfileBgBlur, setProfileBgOpacity,
+    setTextColor, setHeadingColor, setFontSize, setNameFontSize, setFontFamily,
+    setLinkBg, setLinkBgImage, setLinkBgBlur, setLinkBgOpacity, setLinkColor, setLinkFontFamily,
+  } = useProfile();
 
   const addLink = () => {
     setLinks([...links, { name: "", url: "" }]);
@@ -171,7 +138,7 @@ const Sidebar = () => {
                         accept="image/*"
                         onChange={(e) => {
                           const file = e.target.files?.[0];
-                          if (file) fileToBase64(file, setAvatar);
+                          if (file) fileToBase64(file).then(setAvatar);
                           e.target.value = "";
                         }}
                         className="sr-only"
@@ -269,38 +236,7 @@ const Sidebar = () => {
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Background image</label>
-                    <label className="relative flex items-center justify-center w-full h-20 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:opacity-90"
-                      style={bodyBgImage ? {} : { border: '2px dashed var(--input)', background: 'var(--background)' }}
-                    >
-                      {bodyBgImage ? (
-                        <>
-                          <Image src={bodyBgImage} alt="" fill className="object-cover" unoptimized />
-                          <button
-                            type="button"
-                            onClick={(e) => { e.stopPropagation(); e.preventDefault(); setBodyBgImage(null); }}
-                            className="absolute top-1 right-1 z-10 size-5 flex items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
-                          >
-                            <X size={12} />
-                          </button>
-                          <span className="relative z-10 text-[11px] font-medium text-white bg-black/30 px-2 py-0.5 rounded-full backdrop-blur-sm">Change</span>
-                        </>
-                      ) : (
-                        <div className="flex flex-col items-center gap-1 text-muted-foreground">
-                          <Palette size={18} />
-                          <span className="text-xs">Upload image</span>
-                        </div>
-                      )}
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) fileToBase64(file, setBodyBgImage);
-                          e.target.value = "";
-                        }}
-                        className="sr-only"
-                      />
-                    </label>
+                    <ImageUpload value={bodyBgImage} onChange={setBodyBgImage} />
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
@@ -360,38 +296,7 @@ const Sidebar = () => {
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Background image</label>
-                    <label className="relative flex items-center justify-center w-full h-20 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:opacity-90"
-                      style={profileBgImage ? {} : { border: '2px dashed var(--input)', background: 'var(--background)' }}
-                    >
-                      {profileBgImage ? (
-                        <>
-                          <Image src={profileBgImage} alt="" fill className="object-cover" unoptimized />
-                          <button
-                            type="button"
-                            onClick={(e) => { e.stopPropagation(); e.preventDefault(); setProfileBgImage(null); }}
-                            className="absolute top-1 right-1 z-10 size-5 flex items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
-                          >
-                            <X size={12} />
-                          </button>
-                          <span className="relative z-10 text-[11px] font-medium text-white bg-black/30 px-2 py-0.5 rounded-full backdrop-blur-sm">Change</span>
-                        </>
-                      ) : (
-                        <div className="flex flex-col items-center gap-1 text-muted-foreground">
-                          <Palette size={18} />
-                          <span className="text-xs">Upload image</span>
-                        </div>
-                      )}
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) fileToBase64(file, setProfileBgImage);
-                          e.target.value = "";
-                        }}
-                        className="sr-only"
-                      />
-                    </label>
+                    <ImageUpload value={profileBgImage} onChange={setProfileBgImage} />
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
@@ -535,38 +440,7 @@ const Sidebar = () => {
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Background image</label>
-                    <label className="relative flex items-center justify-center w-full h-20 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:opacity-90"
-                      style={linkBgImage ? {} : { border: '2px dashed var(--input)', background: 'var(--background)' }}
-                    >
-                      {linkBgImage ? (
-                        <>
-                          <Image src={linkBgImage} alt="" fill className="object-cover" unoptimized />
-                          <button
-                            type="button"
-                            onClick={(e) => { e.stopPropagation(); e.preventDefault(); setLinkBgImage(null); }}
-                            className="absolute top-1 right-1 z-10 size-5 flex items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
-                          >
-                            <X size={12} />
-                          </button>
-                          <span className="relative z-10 text-[11px] font-medium text-white bg-black/30 px-2 py-0.5 rounded-full backdrop-blur-sm">Change</span>
-                        </>
-                      ) : (
-                        <div className="flex flex-col items-center gap-1 text-muted-foreground">
-                          <Palette size={18} />
-                          <span className="text-xs">Upload image</span>
-                        </div>
-                      )}
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) fileToBase64(file, setLinkBgImage);
-                          e.target.value = "";
-                        }}
-                        className="sr-only"
-                      />
-                    </label>
+                    <ImageUpload value={linkBgImage} onChange={setLinkBgImage} />
                     {linkBgImage && (
                       <p className="text-xs text-muted-foreground">
                         Color acts as overlay when both are set
@@ -644,11 +518,4 @@ const Sidebar = () => {
     </>
   );
 };
-
-function fileToBase64(file: File, onResult: (base64: string) => void) {
-  const reader = new FileReader();
-  reader.onload = () => onResult(reader.result as string);
-  reader.readAsDataURL(file);
-}
-
 export { Sidebar };

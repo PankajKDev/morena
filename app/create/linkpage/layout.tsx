@@ -1,6 +1,7 @@
 import { ProfileActions } from "@/components/shared/ProfileActions";
 import { Sidebar } from "@/components/shared/Sidebar";
 import { ProfileProvider } from "@/components/shared/profile-context";
+import { HomeButton } from "@/components/shared/HomeButton";
 
 function layout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,6 +9,7 @@ function layout({ children }: { children: React.ReactNode }) {
       <ProfileProvider>
         <Sidebar />
         {children}
+        <HomeButton />
         <ProfileActions mode="POST" />
       </ProfileProvider>
     </div>

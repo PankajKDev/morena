@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { useProfileDataStore } from "@/stores/profileDataStore";
 import { uploadBase64 } from "@/lib/cloudinary";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { isBase64 } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 
 const IMAGE_FIELDS = [
   "avatar",
@@ -14,11 +16,13 @@ const IMAGE_FIELDS = [
 ] as const;
 
 const ProfileActions = ({ mode }: { mode: string }) => {
+  const [loading, setLoading] = useState(false);
   const { user } = useUser();
   const router = useRouter();
   const reset = useProfileDataStore((s) => s.reset);
 
   const handleSubmit = async () => {
+    setLoading(true);
     const state = useProfileDataStore.getState();
     const uploads: Promise<void>[] = [];
 
@@ -67,10 +71,8 @@ const ProfileActions = ({ mode }: { mode: string }) => {
       linkFontFamily: final.linkFontFamily,
     };
 
-    // DB logic goes here
-
     const res = await fetch("/api/create-link", {
-      method: `${mode}`,
+      method: mode,
       headers: {
         "Content-Type": "application/json",
       },
@@ -92,6 +94,8 @@ const ProfileActions = ({ mode }: { mode: string }) => {
     if (res.ok) {
       reset();
       router.push("/links");
+    } else {
+      setLoading(false);
     }
   };
 
@@ -99,15 +103,18 @@ const ProfileActions = ({ mode }: { mode: string }) => {
     <div className="fixed bottom-6 right-6 z-50 flex gap-3">
       <button
         onClick={reset}
-        className="px-5 py-2.5 rounded-2xl border border-border bg-background/80 backdrop-blur-sm text-foreground text-sm font-semibold transition-all duration-200 hover:bg-accent hover:scale-105 active:scale-95 shadow-lg"
+        disabled={loading}
+        className="px-5 py-2.5 rounded-2xl border border-border bg-background/80 backdrop-blur-sm text-foreground text-sm font-semibold transition-all duration-200 hover:bg-accent hover:scale-105 active:scale-95 shadow-lg disabled:opacity-50 disabled:pointer-events-none"
       >
         Reset
       </button>
       <button
         onClick={handleSubmit}
-        className="px-5 py-2.5 rounded-2xl bg-primary text-primary-foreground text-sm font-semibold transition-all duration-200 hover:brightness-110 hover:scale-105 active:scale-95 shadow-lg"
+        disabled={loading}
+        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-primary text-primary-foreground text-sm font-semibold transition-all duration-200 hover:brightness-110 hover:scale-105 active:scale-95 shadow-lg disabled:opacity-50 disabled:pointer-events-none"
       >
-        Save
+        {loading && <Loader2 size={16} className="animate-spin" />}
+        {loading ? "Saving..." : "Save"}
       </button>
     </div>
   );

@@ -13,7 +13,7 @@ type PageProps = {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { username, pageurl } = params;
+  const { username, pageurl } = await params;
   const data = await prisma.pagelink.findUnique({
     where: { ownerUsername: username, pageUrl: pageurl },
     include: { userlinks: true },
@@ -37,7 +37,7 @@ export async function generateMetadata({
 }
 
 export default async function page({ params }: PageProps) {
-  const { username, pageurl } = params;
+  const { username, pageurl } = await params;
 
   const data = await prisma.pagelink.findUnique({
     where: { ownerUsername: username, pageUrl: pageurl },

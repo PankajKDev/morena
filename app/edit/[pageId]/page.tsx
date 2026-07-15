@@ -9,7 +9,7 @@ type PageProps = {
   };
 };
 async function page({ params }: PageProps) {
-  const { pageId } = params;
+  const { pageId } = await params;
   const data = await prisma.pagelink.findUnique({
     where: { id: pageId },
     include: { userlinks: true },

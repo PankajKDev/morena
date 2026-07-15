@@ -94,7 +94,7 @@ const AnalyticsEmpty = () => {
           </div>
 
           <Link
-            href="/create/linkpage"
+            href="/links"
             className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-b from-primary to-primary/90 px-6 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30 active:scale-[0.97]"
           >
             Create your first link page

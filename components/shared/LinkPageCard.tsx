@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, ExternalLink } from "lucide-react";
+import { Plus, ExternalLink, Edit3, Trash2 } from "lucide-react";
 import { CreateLinkModal } from "@/components/shared/CreateLinkModal";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 
 interface LinkPage {
@@ -74,12 +74,28 @@ const LinkPageCard = () => {
                   {formatDate(page.updatedAt)}
                 </p>
               </div>
-              <Link href={`/profile/${user?.username}/${page.pageUrl}`}>
-                <ExternalLink
-                  size={16}
-                  className="text-muted-foreground shrink-0"
-                />
-              </Link>
+              <div className="flex items-center gap-1.5">
+                <Link
+                  href={`/edit/${page.id}`}
+                  className="size-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                  aria-label="Edit page"
+                >
+                  <Edit3 size={15} />
+                </Link>
+                <button
+                  onClick={() => {}}
+                  className="size-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+                  aria-label="Delete page"
+                >
+                  <Trash2 size={15} />
+                </button>
+                <Link href={`/profile/${user?.username}/${page.pageUrl}`}>
+                  <ExternalLink
+                    size={16}
+                    className="text-muted-foreground shrink-0"
+                  />
+                </Link>
+              </div>
             </div>
           ))}
         </div>

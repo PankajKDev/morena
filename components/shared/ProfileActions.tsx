@@ -2,7 +2,7 @@
 
 import { useProfileDataStore } from "@/stores/profileDataStore";
 import { uploadBase64 } from "@/lib/cloudinary";
-import { useAuth } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { isBase64 } from "@/lib/utils";
 
@@ -13,8 +13,8 @@ const IMAGE_FIELDS = [
   "linkBgImage",
 ] as const;
 
-const ProfileActions = () => {
-  const { userId } = useAuth();
+const ProfileActions = ({ mode }: { mode: string }) => {
+  const { user } = useUser();
   const router = useRouter();
   const reset = useProfileDataStore((s) => s.reset);
 
@@ -68,9 +68,9 @@ const ProfileActions = () => {
     };
 
     // DB logic goes here
-    console.log({ displayName, avatar, bio, links, customTheme });
+
     const res = await fetch("/api/create-link", {
-      method: "POST",
+      method: `${mode}`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -83,7 +83,8 @@ const ProfileActions = () => {
         bodyBgImage,
         profileBgImage,
         linkBgImage,
-        userId,
+        userId: user?.id,
+        ownerUsername: user?.username,
         customTheme,
         links,
       }),

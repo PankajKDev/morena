@@ -60,7 +60,7 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="w-full max-w-md rounded-3xl border border-white/10 bg-white/90 backdrop-blur-xl shadow-2xl overflow-hidden">
         <div className="flex items-center justify-between p-4 border-b border-black/5">
           <h2 className="text-lg font-bold tracking-tight">Create link page</h2>
@@ -72,7 +72,7 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
           </button>
         </div>
 
-          <div className="p-4 space-y-4">
+        <div className="p-4 space-y-4">
           <div className="space-y-2">
             <label className="text-sm font-medium">Page name</label>
             <input

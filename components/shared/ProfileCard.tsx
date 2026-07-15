@@ -5,45 +5,10 @@ import {
   getLinkStyle,
 } from "@/lib/styleutils";
 import { hexToRgba } from "@/lib/utils";
-import { ProfileCardData, ProfileCardProps } from "@/types";
+import { ProfileCardData } from "@/types";
 import { Link as LinkIcon } from "lucide-react";
 
-const MOCK_DATA: ProfileCardData = {
-  displayName: "Jacket",
-  bio: "i love hotline miami and baseball bats",
-  avatar:
-    "https://res.cloudinary.com/dskcyas06/image/upload/v1784056986/morena/qwikaal0hztsleyobpya.jpg",
-  bodyBgImage:
-    "https://res.cloudinary.com/dskcyas06/image/upload/v1784056988/morena/qq1twtstqrvmintnltjc.jpg",
-  profileBgImage:
-    "https://res.cloudinary.com/dskcyas06/image/upload/v1784056986/morena/polmri9kmmgrwlodhv4x.webp",
-  linkBgImage:
-    "https://res.cloudinary.com/dskcyas06/image/upload/v1784056986/morena/iy3qgzexywja3k4ukcg9.png",
-  customTheme: {
-    bodyBg: "#ffffff",
-    bodyBgBlur: 2,
-    bodyBgOpacity: 55,
-    profileBg: "#000000",
-    profileBgBlur: 0,
-    profileBgOpacity: 95,
-    textColor: "#ffffff",
-    headingColor: "#ffffff",
-    fontSize: 17,
-    nameFontSize: 34,
-    fontFamily: "monospace",
-    linkBg: "#000000",
-    linkBgBlur: 6,
-    linkBgOpacity: 0,
-    linkColor: "#ffffff",
-    linkFontFamily: "sans-serif",
-  },
-  userlinks: [
-    { name: "Portfolio", url: "https://jacket.dev" },
-    { name: "Twitter", url: "https://twitter.com/jacket" },
-  ],
-};
-
-const ProfileCard = ({ data = MOCK_DATA }: ProfileCardProps) => {
+const ProfileCard = ({ data }: { data: ProfileCardData }) => {
   const {
     displayName,
     bio,

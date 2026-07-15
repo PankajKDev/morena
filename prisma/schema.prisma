@@ -34,6 +34,7 @@ bodyBgImage String?
 profileBgImage String?
 linkBgImage String?
 customTheme Json
+ownerUsername String
 userlinks UserLink[]
 creator User @relation(fields: [ownerId],references: [clerkId],onDelete: Cascade)
 ownerId String

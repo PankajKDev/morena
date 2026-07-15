@@ -13,10 +13,12 @@ type PageProps = {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { username, pageurl } = await params;
+  const resolvedParams = await params;
+
+  const { username, pageurl } = resolvedParams;
+
   const data = await prisma.pagelink.findUnique({
     where: { ownerUsername: username, pageUrl: pageurl },
-    include: { userlinks: true },
   });
 
   if (!data) {
@@ -25,17 +27,29 @@ export async function generateMetadata({
     };
   }
 
+  const ogImages = [data.bodyBgImage, data.profileBgImage].filter(
+    Boolean,
+  ) as string[];
+
   return {
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_APP_URL || "https://localhost:3000",
+    ),
     title: `${data.ownerUsername} | ${data.pageUrl}`,
-    description: `${data.bio}`,
+    description: data.bio || `Check out ${data.ownerUsername}'s profile`,
     openGraph: {
       title: `${data.ownerUsername} | ${data.pageUrl}`,
-      description: `${data.bio}`,
-      images: [`${data.bodyBgImage}`, `${data.profileBgImage}`],
+      description: data.bio || `Check out ${data.ownerUsername}'s profile`,
+      images: ogImages,
+    },
+
+    twitter: {
+      title: `${data.ownerUsername} | ${data.pageUrl}`,
+      description: data.bio || "",
+      images: ogImages,
     },
   };
 }
-
 export default async function page({ params }: PageProps) {
   const { username, pageurl } = await params;
 

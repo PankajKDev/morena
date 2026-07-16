@@ -39,19 +39,19 @@ const FeatureCard = ({ title, icon: Icon, span }: Feature) => {
     <div
       id="features"
       className={cn(
-        "group relative flex flex-col justify-between rounded-2xl border bg-card p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:border-primary/30",
+        "group relative flex flex-col justify-between rounded-2xl border bg-card p-3 sm:p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:border-primary/30 overflow-hidden",
         span === "col" && "sm:col-span-2",
         span === "row" && "sm:row-span-2",
         span === "both" && "sm:col-span-2 sm:row-span-2",
       )}
     >
       <div className="flex items-start justify-between">
-        <div className="rounded-xl bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary/20">
-          <Icon className="size-5" strokeWidth={1.5} />
+        <div className="rounded-xl bg-primary/10 p-2 sm:p-3 text-primary transition-colors group-hover:bg-primary/20">
+          <Icon className="size-4 sm:size-5" strokeWidth={1.5} />
         </div>
       </div>
-      <div className="mt-4">
-        <h3 className="font-semibold text-lg tracking-tight">{title}</h3>
+      <div className="mt-2 sm:mt-4">
+        <h3 className="font-semibold text-sm sm:text-lg tracking-tight break-words">{title}</h3>
       </div>
     </div>
   );
@@ -73,7 +73,7 @@ const Features = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-4 auto-rows-30 md:auto-rows-35">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-4 sm:auto-rows-[80px]">
           {features.map((f) => (
             <FeatureCard key={f.title} {...f} />
           ))}

@@ -10,7 +10,9 @@ export default function Home() {
         <Hero />
         <Features />
       </Show>
-      <AnalyticsEmpty />
+      <Show when="signed-in">
+        <AnalyticsEmpty />
+      </Show>
     </main>
   );
 }

@@ -32,6 +32,13 @@ const Navbar = () => {
             >
               Links
             </Link>
+
+            <Link
+              href="/userpages"
+              className="rounded-lg px-4 py-1.5 text-sm font-medium transition-colors hover:bg-background hover:text-foreground text-muted-foreground"
+            >
+              Profiles
+            </Link>
           </div>
         </Show>
 
@@ -132,6 +139,15 @@ const Navbar = () => {
               onClick={() => setMobileOpen(false)}
             >
               Links
+            </MobileLink>
+
+            <MobileLink
+              href="/userpages"
+              index={3}
+              visible={mobileOpen}
+              onClick={() => setMobileOpen(false)}
+            >
+              Profiles
             </MobileLink>
           </Show>
         </div>

@@ -9,3 +9,18 @@ export async function POST(req: Request) {
   }
   return Response.json({ error: "error finding links" }, { status: 400 });
 }
+
+export async function DELETE(req: Request) {
+  const { userId, pageId } = await req.json();
+  try {
+    const res = await prisma.pagelink.delete({
+      where: { id: pageId, ownerId: userId },
+    });
+    return Response.json({ res }, { status: 200 });
+  } catch (e) {
+    return Response.json(
+      { error: `error finding links : ${e}` },
+      { status: 400 },
+    );
+  }
+}

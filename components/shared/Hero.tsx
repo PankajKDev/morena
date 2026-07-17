@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => {
@@ -40,20 +39,18 @@ const Hero = () => {
             </Link>
           </div>
 
-          {/* Dashboard Preview */}
-          <div className="relative mt-16 w-full max-w-2xl aspect-video rounded-3xl overflow-hidden shadow-2xl">
-            <Image
-              src="/demo-profile.png"
-              alt="Dashboard preview"
-              fill
-              className="object-cover"
-              priority
+          {/* Demo Preview */}
+          <div className="mt-16 w-full max-w-sm mx-auto rounded-3xl overflow-hidden shadow-2xl border border-border">
+            <iframe
+              src={process.env.DEMO_URL}
+              className="w-full aspect-9/16"
+              title="Demo preview"
             />
           </div>
 
           {/* Trust bit */}
           <div className="pt-12 text-sm font-medium text-muted-foreground uppercase tracking-widest">
-            Used by 10k+ creators who understand the assignment
+            Highly customizable not those plain old link in bio pages
           </div>
         </div>
       </div>

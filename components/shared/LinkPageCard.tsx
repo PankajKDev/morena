@@ -24,6 +24,7 @@ function formatDate(iso: string): string {
 
 const LinkPageCard = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [pages, setPages] = useState<LinkPage[]>([]);
   const { user } = useUser();
   const userId = user?.id;
@@ -47,6 +48,19 @@ const LinkPageCard = () => {
 
     fetchData();
   }, [userId]);
+
+  const handleDelete = async (pageId: string) => {
+    const res = await fetch("/api/links", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId, pageId }),
+    });
+    if (res.ok) {
+      setPages((prev) => prev.filter((p) => p.id !== pageId));
+    }
+  };
   return (
     <>
       <div className="rounded-2xl border border-border bg-card p-6 space-y-5">
@@ -83,7 +97,7 @@ const LinkPageCard = () => {
                   <Edit3 size={15} />
                 </Link>
                 <button
-                  onClick={() => {}}
+                  onClick={() => setDeleteTarget(page.id)}
                   className="size-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
                   aria-label="Delete page"
                 >
@@ -102,6 +116,35 @@ const LinkPageCard = () => {
       </div>
 
       <CreateLinkModal open={modalOpen} onClose={() => setModalOpen(false)} />
+
+      {deleteTarget && (
+        <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="w-full max-w-sm rounded-2xl border border-border bg-background p-6 shadow-2xl space-y-4">
+            <h3 className="text-lg font-bold tracking-tight">Delete page</h3>
+            <p className="text-sm text-muted-foreground">
+              Are you sure you want to delete this page? This action cannot be
+              undone.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setDeleteTarget(null)}
+                className="px-4 py-2 rounded-xl border border-border text-sm font-semibold transition-all hover:bg-accent active:scale-[0.98]"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={(e) => {
+                  handleDelete(deleteTarget);
+                  setDeleteTarget(null);
+                }}
+                className="px-4 py-2 rounded-xl text-white bg-destructive text-destructive-foreground text-sm font-semibold transition-all hover:brightness-110 active:scale-[0.98]"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

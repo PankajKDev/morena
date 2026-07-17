@@ -4,6 +4,7 @@ export interface Feature {
 }
 
 export interface ProfileCardLink {
+  id: string;
   name: string;
   url: string;
 }
@@ -28,6 +29,7 @@ export interface ProfileCardTheme {
 }
 
 export interface ProfileCardData {
+  id: string;
   displayName: string;
   bio: string | null;
   avatar: string | null;

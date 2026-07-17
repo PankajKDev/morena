@@ -4,17 +4,36 @@ import Image from "next/image";
 import { useProfile } from "@/components/shared/profile-context";
 import { useCssDataStore } from "@/stores/cssDataStore";
 import { Link as LinkIcon } from "lucide-react";
-import { getBodyBgStyle, getProfileBgStyle, getLinkStyle } from "@/lib/styleutils";
+import {
+  getBodyBgStyle,
+  getProfileBgStyle,
+  getLinkStyle,
+} from "@/lib/styleutils";
 import { hexToRgba } from "@/lib/utils";
 import { detectSocialLink } from "@/lib/social";
 
 const Profile = () => {
   const { displayName, avatar, bio, links } = useProfile();
   const {
-    bodyBg, bodyBgImage, bodyBgBlur, bodyBgOpacity,
-    profileBg, profileBgImage, profileBgBlur, profileBgOpacity,
-    textColor, headingColor, fontSize, nameFontSize, fontFamily,
-    linkBg, linkBgImage, linkBgBlur, linkBgOpacity, linkColor, linkFontFamily,
+    bodyBg,
+    bodyBgImage,
+    bodyBgBlur,
+    bodyBgOpacity,
+    profileBg,
+    profileBgImage,
+    profileBgBlur,
+    profileBgOpacity,
+    textColor,
+    headingColor,
+    fontSize,
+    nameFontSize,
+    fontFamily,
+    linkBg,
+    linkBgImage,
+    linkBgBlur,
+    linkBgOpacity,
+    linkColor,
+    linkFontFamily,
   } = useCssDataStore();
 
   return (
@@ -60,7 +79,10 @@ const Profile = () => {
         />
 
         <div className="relative z-10 p-8 pt-10">
-          <div className="absolute inset-0 rounded-3xl" style={{ background: `${hexToRgba(profileBg, 0.3)}` }} />
+          <div
+            className="absolute inset-0 rounded-3xl"
+            style={{ background: `${hexToRgba(profileBg, 0.3)}` }}
+          />
           <div className="relative flex flex-col items-center text-center space-y-5">
             <div className="relative">
               <div
@@ -70,15 +92,15 @@ const Profile = () => {
                 }}
               />
               <div className="size-24 rounded-full border-[3px] border-white/60 overflow-hidden shadow-xl bg-muted/50 shrink-0 relative">
-                  {avatar ? (
-                    <Image
-                      src={avatar}
-                      alt="Avatar"
-                      fill
-                      className="object-cover"
-                      unoptimized
-                    />
-                  ) : (
+                {avatar ? (
+                  <Image
+                    src={avatar}
+                    alt="Avatar"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                ) : (
                   <div className="size-full flex items-center justify-center bg-linear-to-br from-muted to-muted/50 text-muted-foreground text-2xl font-bold">
                     ?
                   </div>
@@ -93,7 +115,8 @@ const Profile = () => {
                   color: headingColor,
                   fontSize: `${nameFontSize}px`,
                   fontFamily,
-                  textShadow: "0 2px 4px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.1)",
+                  textShadow:
+                    "0 2px 4px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.1)",
                 }}
               >
                 {displayName}
@@ -116,54 +139,56 @@ const Profile = () => {
 
             {links.length > 0 && (
               <div className="w-full pt-3 space-y-3">
-                {links.map(
-                  (link, index) => {
-                    const platform = link.url ? detectSocialLink(link.url) : null;
-                    const Icon = platform?.icon ?? LinkIcon;
-                    return (
-                      link.name &&
-                      link.url && (
-                        <a
-                          key={index}
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group relative flex items-center gap-3 w-full px-5 py-3.5 rounded-2xl border border-white/20 overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:shadow-xl active:scale-[0.98]"
-                          style={getLinkStyle(linkBg, linkBgImage, linkBgOpacity)}
+                {links.map((link, index) => {
+                  const platform = link.url ? detectSocialLink(link.url) : null;
+                  const Icon = platform?.icon ?? LinkIcon;
+                  return (
+                    link.name &&
+                    link.url && (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative flex items-center gap-3 w-full px-5 py-3.5 rounded-2xl border border-white/20 overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:shadow-xl active:scale-[0.98]"
+                        style={getLinkStyle(linkBg, linkBgImage, linkBgOpacity)}
+                      >
+                        <div
+                          className="absolute inset-0 transition-opacity duration-300"
+                          style={{
+                            backdropFilter: `blur(${linkBgBlur}px)`,
+                            WebkitBackdropFilter: `blur(${linkBgBlur}px)`,
+                          }}
+                        />
+                        <div
+                          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          style={{
+                            background: `linear-gradient(135deg, ${hexToRgba(textColor, 0.05)}, transparent)`,
+                          }}
+                        />
+                        <Icon
+                          size={16}
+                          className="shrink-0 relative z-10 transition-transform duration-300 group-hover:scale-110"
+                          style={{
+                            color: linkColor,
+                            opacity: 0.7,
+                            filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.15))",
+                          }}
+                        />
+                        <span
+                          className="font-semibold relative z-10 tracking-tight"
+                          style={{
+                            color: linkColor,
+                            fontFamily: linkFontFamily,
+                            textShadow: "0 1px 3px rgba(0,0,0,0.15)",
+                          }}
                         >
-                          <div
-                            className="absolute inset-0 transition-opacity duration-300"
-                            style={{
-                              backdropFilter: `blur(${linkBgBlur}px)`,
-                              WebkitBackdropFilter: `blur(${linkBgBlur}px)`,
-                            }}
-                          />
-                          <div
-                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            style={{
-                              background: `linear-gradient(135deg, ${hexToRgba(textColor, 0.05)}, transparent)`,
-                            }}
-                          />
-                          <Icon
-                            size={16}
-                            className="shrink-0 relative z-10 transition-transform duration-300 group-hover:scale-110"
-                            style={{ color: linkColor, opacity: 0.7, filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.15))" }}
-                          />
-                          <span
-                            className="font-semibold relative z-10 tracking-tight"
-                            style={{
-                              color: linkColor,
-                              fontFamily: linkFontFamily,
-                  textShadow: "0 1px 3px rgba(0,0,0,0.15)",
-                            }}
-                          >
-                            {link.name}
-                          </span>
-                        </a>
-                      )
-                    );
-                  },
-                )}
+                          {link.name}
+                        </span>
+                      </a>
+                    )
+                  );
+                })}
               </div>
             )}
           </div>

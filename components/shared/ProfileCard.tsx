@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import {
   getBodyBgStyle,
@@ -12,6 +14,7 @@ import { ProfileMusicPlayer } from "./ProfileMusicPlayer";
 
 const ProfileCard = ({ data }: { data: ProfileCardData }) => {
   const {
+    id,
     displayName,
     bio,
     avatar,
@@ -67,7 +70,10 @@ const ProfileCard = ({ data }: { data: ProfileCardData }) => {
         />
 
         <div className="relative z-10 p-8 pt-10">
-          <div className="absolute inset-0 rounded-3xl" style={{ background: `${hexToRgba(t.profileBg, 0.3)}` }} />
+          <div
+            className="absolute inset-0 rounded-3xl"
+            style={{ background: `${hexToRgba(t.profileBg, 0.3)}` }}
+          />
           <div className="relative flex flex-col items-center text-center space-y-5">
             <div className="relative">
               <div
@@ -100,7 +106,8 @@ const ProfileCard = ({ data }: { data: ProfileCardData }) => {
                   color: t.headingColor,
                   fontSize: `${t.nameFontSize}px`,
                   fontFamily: t.fontFamily,
-                  textShadow: "0 2px 4px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.1)",
+                  textShadow:
+                    "0 2px 4px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.1)",
                 }}
               >
                 {displayName}
@@ -123,65 +130,83 @@ const ProfileCard = ({ data }: { data: ProfileCardData }) => {
 
             {userlinks.length > 0 && (
               <div className="w-full pt-3 space-y-3">
-                {userlinks.map(
-                  (link, index) => {
-                    const platform = link.url ? detectSocialLink(link.url) : null;
-                    const Icon = platform?.icon ?? LinkIcon;
-                    return (
-                      link.name &&
-                      link.url && (
-                        <a
-                          key={index}
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group relative flex items-center gap-3 w-full px-5 py-3.5 rounded-2xl border border-white/20 overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:shadow-xl active:scale-[0.98]"
-                          style={getLinkStyle(
-                            t.linkBg,
-                            linkBgImage,
-                            t.linkBgOpacity,
-                          )}
+                {userlinks.map((link, index) => {
+                  const platform = link.url ? detectSocialLink(link.url) : null;
+                  const Icon = platform?.icon ?? LinkIcon;
+                  return (
+                    link.name &&
+                    link.url && (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => {
+                          fetch("/api/click", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                              linkId: link.id,
+                              pageId: id,
+                            }),
+                          }).catch((e) => {
+                            console.log("error saving data", e);
+                          });
+                        }}
+                        className="group relative flex items-center gap-3 w-full px-5 py-3.5 rounded-2xl border border-white/20 overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:shadow-xl active:scale-[0.98]"
+                        style={getLinkStyle(
+                          t.linkBg,
+                          linkBgImage,
+                          t.linkBgOpacity,
+                        )}
+                      >
+                        <div
+                          className="absolute inset-0 transition-opacity duration-300"
+                          style={{
+                            backdropFilter: `blur(${t.linkBgBlur}px)`,
+                            WebkitBackdropFilter: `blur(${t.linkBgBlur}px)`,
+                          }}
+                        />
+                        <div
+                          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          style={{
+                            background: `linear-gradient(135deg, ${hexToRgba(t.textColor, 0.05)}, transparent)`,
+                          }}
+                        />
+                        <Icon
+                          size={16}
+                          className="shrink-0 relative z-10 transition-transform duration-300 group-hover:scale-110"
+                          style={{
+                            color: t.linkColor,
+                            opacity: 0.7,
+                            filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.15))",
+                          }}
+                        />
+                        <span
+                          className="font-semibold relative z-10 tracking-tight"
+                          style={{
+                            color: t.linkColor,
+                            fontFamily: t.linkFontFamily,
+                            textShadow: "0 1px 3px rgba(0,0,0,0.15)",
+                          }}
                         >
-                          <div
-                            className="absolute inset-0 transition-opacity duration-300"
-                            style={{
-                              backdropFilter: `blur(${t.linkBgBlur}px)`,
-                              WebkitBackdropFilter: `blur(${t.linkBgBlur}px)`,
-                            }}
-                          />
-                          <div
-                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            style={{
-                              background: `linear-gradient(135deg, ${hexToRgba(t.textColor, 0.05)}, transparent)`,
-                            }}
-                          />
-                          <Icon
-                            size={16}
-                            className="shrink-0 relative z-10 transition-transform duration-300 group-hover:scale-110"
-                            style={{ color: t.linkColor, opacity: 0.7, filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.15))" }}
-                          />
-                          <span
-                            className="font-semibold relative z-10 tracking-tight"
-                            style={{
-                              color: t.linkColor,
-                              fontFamily: t.linkFontFamily,
-                  textShadow: "0 1px 3px rgba(0,0,0,0.15)",
-                            }}
-                          >
-                            {link.name}
-                          </span>
-                        </a>
-                      )
-                    );
-                  },
-                )}
+                          {link.name}
+                        </span>
+                      </a>
+                    )
+                  );
+                })}
               </div>
             )}
           </div>
         </div>
       </div>
       {music && (
-        <ProfileMusicPlayer src={music} volume={musicVolume ?? 50} displayName={displayName} />
+        <ProfileMusicPlayer
+          src={music}
+          volume={musicVolume ?? 50}
+          displayName={displayName}
+        />
       )}
     </div>
   );

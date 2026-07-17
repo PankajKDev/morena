@@ -7,6 +7,7 @@ import {
 import { hexToRgba } from "@/lib/utils";
 import { ProfileCardData } from "@/types";
 import { Link as LinkIcon } from "lucide-react";
+import { ProfileMusicPlayer } from "./ProfileMusicPlayer";
 
 const ProfileCard = ({ data }: { data: ProfileCardData }) => {
   const {
@@ -16,6 +17,8 @@ const ProfileCard = ({ data }: { data: ProfileCardData }) => {
     bodyBgImage,
     profileBgImage,
     linkBgImage,
+    music,
+    musicVolume,
     customTheme: t,
     userlinks = [],
   } = data;
@@ -170,6 +173,9 @@ const ProfileCard = ({ data }: { data: ProfileCardData }) => {
           </div>
         </div>
       </div>
+      {music && (
+        <ProfileMusicPlayer src={music} volume={musicVolume ?? 50} displayName={displayName} />
+      )}
     </div>
   );
 };

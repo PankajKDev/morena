@@ -27,26 +27,13 @@ export async function generateMetadata({
     };
   }
 
-  const ogImages = [data.bodyBgImage, data.profileBgImage].filter(
-    Boolean,
-  ) as string[];
-
   return {
-    metadataBase: new URL(
-      process.env.NEXT_PUBLIC_APP_URL || "https://localhost:3000",
-    ),
     title: `${data.ownerUsername} | ${data.pageUrl}`,
     description: data.bio || `Check out ${data.ownerUsername}'s profile`,
     openGraph: {
       title: `${data.ownerUsername} | ${data.pageUrl}`,
       description: data.bio || `Check out ${data.ownerUsername}'s profile`,
-      images: ogImages,
-    },
-
-    twitter: {
-      title: `${data.ownerUsername} | ${data.pageUrl}`,
-      description: data.bio || "",
-      images: ogImages,
+      images: `${data.bodyBgImage}`,
     },
   };
 }

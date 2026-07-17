@@ -5,8 +5,6 @@ import Link from "next/link";
 import { Show, UserButton } from "@clerk/nextjs";
 import { Menu, X } from "lucide-react";
 
-const navLinkClass = "text-sm font-medium hover:text-primary transition-colors";
-
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -21,12 +19,17 @@ const Navbar = () => {
         </Link>
 
         <Show when="signed-in">
-          <div className="hidden md:flex items-center gap-6">
-            <Link href="/" className={navLinkClass}>
+          <div className="hidden md:flex items-center gap-1 rounded-xl bg-muted/60 p-1">
+            <Link
+              href="/"
+              className="rounded-lg px-4 py-1.5 text-sm font-medium transition-colors hover:bg-background hover:text-foreground text-muted-foreground"
+            >
               Dashboard
             </Link>
-
-            <Link href="/links" className={navLinkClass}>
+            <Link
+              href="/links"
+              className="rounded-lg px-4 py-1.5 text-sm font-medium transition-colors hover:bg-background hover:text-foreground text-muted-foreground"
+            >
               Links
             </Link>
           </div>
@@ -36,7 +39,7 @@ const Navbar = () => {
           <Show when="signed-out">
             <Link
               href="/sign-in"
-              className={`${navLinkClass} hidden sm:inline`}
+              className="text-sm font-medium hover:text-primary transition-colors hidden sm:inline"
             >
               Sign In
             </Link>

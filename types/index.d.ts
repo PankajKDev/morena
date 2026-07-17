@@ -31,6 +31,8 @@ export interface ProfileCardData {
   displayName: string;
   bio: string | null;
   avatar: string | null;
+  music: string | null;
+  musicVolume: number | null;
   bodyBgImage: string | null;
   profileBgImage: string | null;
   linkBgImage: string | null;

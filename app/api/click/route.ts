@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { userAgent } from "next/server";
 import { geolocation } from "@vercel/functions";
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   const { linkId, pageId } = await req.json();
   const { browser, os, device } = userAgent(req);
   const { country, city } = geolocation(req);

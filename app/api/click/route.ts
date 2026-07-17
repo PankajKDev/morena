@@ -6,8 +6,8 @@ export async function POST(req: Request) {
   const { browser, os, device } = userAgent(req);
   const { country, city } = geolocation(req);
 
-  prisma
-    .$transaction([
+  try {
+    await prisma.$transaction([
       prisma.userLink.update({
         where: { id: linkId },
         data: { totalClicks: { increment: 1 } },
@@ -22,8 +22,10 @@ export async function POST(req: Request) {
           region: `${city}/${country}`,
         },
       }),
-    ])
-    .catch(console.error);
-
+    ]);
+  } catch (err) {
+    console.error("Analytics transaction failed:", err);
+    return Response.json({ error: "failed" }, { status: 500 });
+  }
   return Response.json({ message: "success" }, { status: 302 });
 }

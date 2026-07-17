@@ -1,4 +1,15 @@
 import { CssDataState, ProfileDataState } from "@/types";
+import {
+  Camera,
+  Code,
+  Play,
+  Music,
+  Briefcase,
+  MessageCircle,
+  Gamepad2,
+  Headphones,
+  Send,
+} from "lucide-react";
 
 export const CSS_DEFAULTS: CssDataState = {
   bodyBg: "#ffffff",
@@ -31,4 +42,23 @@ export const GENERAL_DEFAULTS: ProfileDataState = {
   links: [],
   music: null,
   musicVolume: 50,
+};
+
+export const SOCIAL_PLATFORMS: Record<
+  string,
+  { name: string; icon: typeof Camera; color: string }
+> = {
+  "instagram.com": { name: "Instagram", icon: Camera, color: "#E4405F" },
+  "x.com": { name: "X", icon: MessageCircle, color: "#000000" },
+  "twitter.com": { name: "X", icon: MessageCircle, color: "#000000" },
+  "youtube.com": { name: "YouTube", icon: Play, color: "#FF0000" },
+  "youtu.be": { name: "YouTube", icon: Play, color: "#FF0000" },
+  "github.com": { name: "GitHub", icon: Code, color: "#333" },
+  "tiktok.com": { name: "TikTok", icon: Music, color: "#000000" },
+  "linkedin.com": { name: "LinkedIn", icon: Briefcase, color: "#0A66C2" },
+  "discord.gg": { name: "Discord", icon: MessageCircle, color: "#5865F2" },
+  "discord.com": { name: "Discord", icon: MessageCircle, color: "#5865F2" },
+  "twitch.tv": { name: "Twitch", icon: Gamepad2, color: "#9146FF" },
+  "spotify.com": { name: "Spotify", icon: Headphones, color: "#1DB954" },
+  "t.me": { name: "Telegram", icon: Send, color: "#0088cc" },
 };

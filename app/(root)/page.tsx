@@ -1,7 +1,8 @@
 import AnalyticsEmpty from "@/components/shared/AnalyticsEmpty";
-import Features from "@/components/shared/Features";
 import Hero from "@/components/shared/Hero";
 import { Show } from "@clerk/nextjs";
+import { Features } from "@/components/shared/Features";
+import { About } from "@/components/shared/About";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <Show when="signed-out">
         <Hero />
         <Features />
+        <About />
       </Show>
       <Show when="signed-in">
         <AnalyticsEmpty />

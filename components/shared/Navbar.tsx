@@ -20,25 +20,12 @@ const Navbar = () => {
           <span className="text-primary">Morena</span>
         </Link>
 
-        <Show when="signed-out">
-          <div className="hidden md:flex items-center gap-6">
-            <Link href="/about" className={navLinkClass}>
-              About
-            </Link>
-            <Link href="/#features" className={navLinkClass}>
-              Features
-            </Link>
-          </div>
-        </Show>
-
         <Show when="signed-in">
           <div className="hidden md:flex items-center gap-6">
             <Link href="/" className={navLinkClass}>
               Dashboard
             </Link>
-            <Link href="/integrations" className={navLinkClass}>
-              Integrations
-            </Link>
+
             <Link href="/links" className={navLinkClass}>
               Links
             </Link>
@@ -103,29 +90,13 @@ const Navbar = () => {
       >
         <div className="px-4 py-5 space-y-2">
           <Show when="signed-out">
-            <MobileLink
-              href="/about"
-              index={0}
-              visible={mobileOpen}
-              onClick={() => setMobileOpen(false)}
-            >
-              About
-            </MobileLink>
-            <MobileLink
-              href="/#features"
-              index={1}
-              visible={mobileOpen}
-              onClick={() => setMobileOpen(false)}
-            >
-              Features
-            </MobileLink>
             <div
               className="h-px bg-border my-3"
               style={{ animationDelay: "200ms" }}
             />
             <MobileLink
               href="/sign-in"
-              index={3}
+              index={1}
               visible={mobileOpen}
               onClick={() => setMobileOpen(false)}
             >
@@ -133,7 +104,7 @@ const Navbar = () => {
             </MobileLink>
             <MobileLink
               href="/sign-up"
-              index={4}
+              index={2}
               visible={mobileOpen}
               onClick={() => setMobileOpen(false)}
               primary
@@ -150,14 +121,7 @@ const Navbar = () => {
             >
               Dashboard
             </MobileLink>
-            <MobileLink
-              href="/integrations"
-              index={1}
-              visible={mobileOpen}
-              onClick={() => setMobileOpen(false)}
-            >
-              Integrations
-            </MobileLink>
+
             <MobileLink
               href="/links"
               index={2}

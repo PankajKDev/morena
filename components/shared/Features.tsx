@@ -1,86 +1,41 @@
-import { cn } from "@/lib/utils";
-import type { LucideIcon } from "lucide-react";
-import {
-  Palette,
-  Globe,
-  CalendarClock,
-  Puzzle,
-  ShoppingBag,
-  Users,
-  Music,
-  Video,
-  Gamepad2,
-  BookHeart,
-  Mail,
-} from "lucide-react";
+import { Check } from "lucide-react";
 
-interface Feature {
-  title: string;
-  icon: LucideIcon;
-  span?: "col" | "row" | "both";
-}
-
-const features: Feature[] = [
-  { title: "Themes", icon: Palette, span: "col" },
-  { title: "Custom Domains", icon: Globe, span: "row" },
-  { title: "Scheduling", icon: CalendarClock },
-  { title: "Embeds", icon: Puzzle },
-  { title: "Store", icon: ShoppingBag, span: "col" },
-  { title: "Social Icons", icon: Users },
-  { title: "Music", icon: Music },
-  { title: "Videos", icon: Video },
-  { title: "Discord Presence", icon: Gamepad2, span: "both" },
-  { title: "Guestbook", icon: BookHeart },
-  { title: "Email Collection", icon: Mail, span: "col" },
+const features = [
+  "Custom link-in-bio profile pages",
+  "Live preview while editing",
+  "Custom themes — colors, fonts, backgrounds",
+  "Background images with blur and opacity controls",
+  "Custom avatar upload",
+  "Audio / music integration with volume control",
+  "Multiple links with individual styling",
+  "Responsive profile cards",
+  "Analytics dashboard",
 ];
-
-const FeatureCard = ({ title, icon: Icon, span }: Feature) => {
-  return (
-    <div
-      id="features"
-      className={cn(
-        "group relative flex flex-col justify-between rounded-2xl border bg-card p-3 sm:p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:border-primary/30 overflow-hidden",
-        span === "col" && "sm:col-span-2",
-        span === "row" && "sm:row-span-2",
-        span === "both" && "sm:col-span-2 sm:row-span-2",
-      )}
-    >
-      <div className="flex items-start justify-between">
-        <div className="rounded-xl bg-primary/10 p-2 sm:p-3 text-primary transition-colors group-hover:bg-primary/20">
-          <Icon className="size-4 sm:size-5" strokeWidth={1.5} />
-        </div>
-      </div>
-      <div className="mt-2 sm:mt-4">
-        <h3 className="font-semibold text-sm sm:text-lg tracking-tight break-words">{title}</h3>
-      </div>
-    </div>
-  );
-};
 
 const Features = () => {
   return (
-    <section className="bg-background py-20 lg:py-28">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col items-center text-center space-y-4 mb-14">
-          <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary">
-            <span>⚡ Everything you need</span>
-          </div>
-          <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Packed with <span className="text-primary">dopamine</span> features
+    <section className="container mx-auto px-4 md:px-6 py-16 md:py-24">
+      <div className="max-w-2xl mx-auto space-y-8">
+        <div className="space-y-2 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+            Features
           </h2>
-          <p className="max-w-xl text-muted-foreground text-lg">
-            All the tools to flex your vibe across the web.
+          <p className="text-muted-foreground text-lg">
+            Everything you need to build and share your link-in-bio page.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-4 sm:auto-rows-[80px]">
-          {features.map((f) => (
-            <FeatureCard key={f.title} {...f} />
+        <ul className="space-y-3">
+          {features.map((feature) => (
+            <li key={feature} className="flex items-start gap-3">
+              <Check size={20} className="text-primary shrink-0 mt-0.5" />
+              <span>{feature}</span>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
 };
 
-export default Features;
+export { Features };

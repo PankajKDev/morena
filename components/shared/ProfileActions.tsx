@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import { useProfileDataStore } from "@/stores/profileDataStore";
+import { useCssDataStore } from "@/stores/cssDataStore";
 import { uploadBase64 } from "@/lib/cloudinary";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { isBase64 } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
-const IMAGE_FIELDS = [
-  "avatar",
+const CONTENT_IMAGE_FIELDS = ["avatar"] as const;
+const CSS_IMAGE_FIELDS = [
   "bodyBgImage",
   "profileBgImage",
   "linkBgImage",
@@ -19,27 +20,52 @@ const ProfileActions = ({ mode }: { mode: string }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
   const router = useRouter();
-  const reset = useProfileDataStore((s) => s.reset);
+  const resetProfile = useProfileDataStore((s) => s.reset);
+  const resetCss = useCssDataStore((s) => s.reset);
 
   const handleSubmit = async () => {
     setLoading(true);
-    const state = useProfileDataStore.getState();
+    const profileState = useProfileDataStore.getState();
+    const cssState = useCssDataStore.getState();
     const uploads: Promise<void>[] = [];
+    const musicValue = profileState.music;
 
-    for (const field of IMAGE_FIELDS) {
-      const value = state[field];
+    for (const field of CONTENT_IMAGE_FIELDS) {
+      const value = profileState[field];
       if (!isBase64(value)) continue;
 
       uploads.push(
-        uploadBase64(value).then((url) => {
+        uploadBase64({ base64: value, assetType: "image" }).then((url) => {
           if (url) useProfileDataStore.setState({ [field]: url });
+        }),
+      );
+    }
+
+    if (musicValue && isBase64(musicValue)) {
+      uploads.push(
+        uploadBase64({ base64: musicValue, assetType: "video" }).then((url) => {
+          if (url) {
+            useProfileDataStore.setState({ music: url });
+          }
+        }),
+      );
+    }
+
+    for (const field of CSS_IMAGE_FIELDS) {
+      const value = cssState[field];
+      if (!isBase64(value)) continue;
+
+      uploads.push(
+        uploadBase64({ base64: value, assetType: "image" }).then((url) => {
+          if (url) useCssDataStore.setState({ [field]: url });
         }),
       );
     }
 
     await Promise.all(uploads);
 
-    const final = useProfileDataStore.getState();
+    const finalProfile = useProfileDataStore.getState();
+    const finalCss = useCssDataStore.getState();
     const {
       linkPageName,
       displayName,
@@ -47,28 +73,28 @@ const ProfileActions = ({ mode }: { mode: string }) => {
       pageUrl,
       bio,
       links,
-      bodyBgImage,
-      profileBgImage,
-      linkBgImage,
-    } = final;
+      music,
+      musicVolume,
+    } = finalProfile;
+    const { bodyBgImage, profileBgImage, linkBgImage } = finalCss;
 
     const customTheme = {
-      bodyBg: final.bodyBg,
-      bodyBgBlur: final.bodyBgBlur,
-      bodyBgOpacity: final.bodyBgOpacity,
-      profileBg: final.profileBg,
-      profileBgBlur: final.profileBgBlur,
-      profileBgOpacity: final.profileBgOpacity,
-      textColor: final.textColor,
-      headingColor: final.headingColor,
-      fontSize: final.fontSize,
-      nameFontSize: final.nameFontSize,
-      fontFamily: final.fontFamily,
-      linkBg: final.linkBg,
-      linkBgBlur: final.linkBgBlur,
-      linkBgOpacity: final.linkBgOpacity,
-      linkColor: final.linkColor,
-      linkFontFamily: final.linkFontFamily,
+      bodyBg: finalCss.bodyBg,
+      bodyBgBlur: finalCss.bodyBgBlur,
+      bodyBgOpacity: finalCss.bodyBgOpacity,
+      profileBg: finalCss.profileBg,
+      profileBgBlur: finalCss.profileBgBlur,
+      profileBgOpacity: finalCss.profileBgOpacity,
+      textColor: finalCss.textColor,
+      headingColor: finalCss.headingColor,
+      fontSize: finalCss.fontSize,
+      nameFontSize: finalCss.nameFontSize,
+      fontFamily: finalCss.fontFamily,
+      linkBg: finalCss.linkBg,
+      linkBgBlur: finalCss.linkBgBlur,
+      linkBgOpacity: finalCss.linkBgOpacity,
+      linkColor: finalCss.linkColor,
+      linkFontFamily: finalCss.linkFontFamily,
     };
 
     const res = await fetch("/api/create-link", {
@@ -85,6 +111,8 @@ const ProfileActions = ({ mode }: { mode: string }) => {
         bodyBgImage,
         profileBgImage,
         linkBgImage,
+        music,
+        musicVolume,
         userId: user?.id,
         ownerUsername: user?.username,
         customTheme,
@@ -92,7 +120,8 @@ const ProfileActions = ({ mode }: { mode: string }) => {
       }),
     });
     if (res.ok) {
-      reset();
+      resetProfile();
+      resetCss();
       router.push("/links");
     } else {
       setLoading(false);
@@ -102,7 +131,10 @@ const ProfileActions = ({ mode }: { mode: string }) => {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex gap-3">
       <button
-        onClick={reset}
+        onClick={() => {
+          resetProfile();
+          resetCss();
+        }}
         disabled={loading}
         className="px-5 py-2.5 rounded-2xl border border-border bg-background/80 backdrop-blur-sm text-foreground text-sm font-semibold transition-all duration-200 hover:bg-accent hover:scale-105 active:scale-95 shadow-lg disabled:opacity-50 disabled:pointer-events-none"
       >

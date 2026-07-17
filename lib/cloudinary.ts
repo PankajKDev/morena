@@ -1,7 +1,13 @@
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const UPLOAD_PRESET = "morena_unsigned";
 
-async function uploadBase64(base64: string): Promise<string | null> {
+async function uploadBase64({
+  base64,
+  assetType,
+}: {
+  base64: string;
+  assetType: string;
+}): Promise<string | null> {
   const cloudName = CLOUDINARY_CLOUD_NAME;
   if (!cloudName) {
     console.warn("Cloudinary cloud name not configured");
@@ -14,7 +20,7 @@ async function uploadBase64(base64: string): Promise<string | null> {
 
   try {
     const res = await fetch(
-      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      `https://api.cloudinary.com/v1_1/${cloudName}/${assetType}/upload`,
       { method: "POST", body: formData },
     );
     const data = await res.json();

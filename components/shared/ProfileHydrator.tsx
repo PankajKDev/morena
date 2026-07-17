@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useProfileDataStore } from "@/stores/profileDataStore";
+import { useCssDataStore } from "@/stores/cssDataStore";
 import type { IProfileHydratorData, ProfileCardTheme } from "@/types";
 import { Profile } from "./Profile";
 
@@ -38,10 +39,13 @@ const ProfileHydrator = ({ data }: ProfileHydratorProps) => {
       displayName: data.displayName,
       avatar: data.avatar,
       bio: data.bio ?? "",
+      links: data.userlinks ?? [],
+    });
+
+    useCssDataStore.setState({
       bodyBgImage: data.bodyBgImage,
       profileBgImage: data.profileBgImage,
       linkBgImage: data.linkBgImage,
-      links: data.userlinks ?? [],
       ...mapTheme(data.customTheme),
     });
   }, [data]);

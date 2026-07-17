@@ -32,6 +32,8 @@ bio String?
 avatar String?
 bodyBgImage String?
 profileBgImage String?
+music String?
+musicVolume Int?
 linkBgImage String?
 customTheme Json
 ownerUsername String
@@ -50,3 +52,4 @@ model UserLink{
   totalClicks Int @default(0)
   page Pagelink @relation(fields: [pageId],references: [id],onDelete: Cascade)
 }
+

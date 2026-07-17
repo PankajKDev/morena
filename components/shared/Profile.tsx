@@ -2,18 +2,19 @@
 
 import Image from "next/image";
 import { useProfile } from "@/components/shared/profile-context";
+import { useCssDataStore } from "@/stores/cssDataStore";
 import { Link as LinkIcon } from "lucide-react";
 import { getBodyBgStyle, getProfileBgStyle, getLinkStyle } from "@/lib/styleutils";
 import { hexToRgba } from "@/lib/utils";
 
 const Profile = () => {
+  const { displayName, avatar, bio, links } = useProfile();
   const {
-    displayName, avatar, bio, links,
     bodyBg, bodyBgImage, bodyBgBlur, bodyBgOpacity,
     profileBg, profileBgImage, profileBgBlur, profileBgOpacity,
     textColor, headingColor, fontSize, nameFontSize, fontFamily,
     linkBg, linkBgImage, linkBgBlur, linkBgOpacity, linkColor, linkFontFamily,
-  } = useProfile();
+  } = useCssDataStore();
 
   return (
     <div

@@ -3,10 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Show, UserButton } from "@clerk/nextjs";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
@@ -43,6 +47,13 @@ const Navbar = () => {
         </Show>
 
         <div className="flex items-center gap-4">
+          <button
+            onClick={toggleTheme}
+            className="size-9 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
           <Show when="signed-out">
             <Link
               href="/sign-in"

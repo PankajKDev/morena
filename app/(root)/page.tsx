@@ -1,8 +1,8 @@
-import AnalyticsEmpty from "@/components/shared/AnalyticsEmpty";
 import Hero from "@/components/shared/Hero";
 import { Show } from "@clerk/nextjs";
 import { Features } from "@/components/shared/Features";
 import { About } from "@/components/shared/About";
+import AnalyticsWrapper from "@/components/shared/AnalyticsWrapper";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
         <About />
       </Show>
       <Show when="signed-in">
-        <AnalyticsEmpty />
+        <AnalyticsWrapper />
       </Show>
     </main>
   );

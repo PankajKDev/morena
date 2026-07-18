@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ThemeProvider } from "next-themes";
 const geistHeading = Geist({ subsets: ["latin"], variable: "--font-heading" });
 
 const notoSans = Noto_Sans({ subsets: ["latin"], variable: "--font-sans" });
@@ -34,7 +35,7 @@ export default function RootLayout({
       <html
         lang="en"
         className={cn(
-          "h-full",
+          "h-full dark",
           "antialiased",
           geistSans.variable,
           geistMono.variable,
@@ -42,8 +43,13 @@ export default function RootLayout({
           notoSans.variable,
           geistHeading.variable,
         )}
+        suppressHydrationWarning
       >
-        <body className="min-h-full flex flex-col">{children}</body>
+        <body className="min-h-full flex flex-col">
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+          </ThemeProvider>
+        </body>
         <Analytics />
         <SpeedInsights />
       </html>

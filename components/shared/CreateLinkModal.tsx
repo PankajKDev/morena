@@ -61,12 +61,12 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="w-full max-w-md rounded-3xl border border-white/10 bg-white/90 backdrop-blur-xl shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between p-4 border-b border-black/5">
+      <div className="w-full max-w-md rounded-3xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden">
+        <div className="flex items-center justify-between p-4 border-b">
           <h2 className="text-lg font-bold tracking-tight">Create link page</h2>
           <button
             onClick={onClose}
-            className="size-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+            className="size-8 flex items-center justify-center rounded-full hover:bg-accent transition-colors"
           >
             <X size={18} />
           </button>
@@ -84,7 +84,7 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
               }}
               placeholder="e.g. My Links"
               maxLength={100}
-              className="w-full px-3 py-2.5 rounded-xl border border-input bg-white text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all duration-200"
+              className="w-full px-3 py-2.5 rounded-xl border border-input bg-background text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all duration-200"
             />
           </div>
           <div className="space-y-2">
@@ -97,16 +97,16 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
                 setError("");
               }}
               placeholder="e.g. mylinks"
-              className="w-full px-3 py-2.5 rounded-xl border border-input bg-white text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all duration-200"
+              className="w-full px-3 py-2.5 rounded-xl border border-input bg-background text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all duration-200"
             />
             {error && <p className="text-xs text-destructive">{error}</p>}
           </div>
         </div>
 
-        <div className="flex gap-3 p-4 border-t border-black/5">
+        <div className="flex gap-3 p-4 border-t">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-2.5 rounded-xl border border-border bg-white text-foreground text-sm font-semibold transition-all duration-200 hover:bg-accent active:scale-[0.98]"
+            className="flex-1 px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm font-semibold transition-all duration-200 hover:bg-accent active:scale-[0.98]"
           >
             Cancel
           </button>

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "@/lib/theme";
 import { Toaster } from "sonner";
 const geistHeading = Geist({ subsets: ["latin"], variable: "--font-heading" });
 
@@ -24,6 +24,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Morena",
   description: "Create highly customizable link in bio pages",
+  metadataBase: new URL(`${process.env.NEXT_BASE_URL}`),
 };
 
 export default function RootLayout({

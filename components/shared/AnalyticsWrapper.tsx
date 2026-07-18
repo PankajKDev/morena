@@ -1,18 +1,11 @@
 import { getDashboardData } from "@/lib/analytics";
-import { currentUser } from "@clerk/nextjs/server";
 import AnalyticsEmpty from "./AnalyticsEmpty";
 import { AnalyticsStats } from "./AnalyticsStats";
 import { ClicksChart } from "./ClicksChart";
 import { TopLinks } from "./TopLinks";
 
-async function AnalyticsWrapper() {
-  const user = await currentUser();
-  if (!user) {
-    return (
-      <div className="flex justify-center items-center">User not logged in</div>
-    );
-  }
-  const data = await getDashboardData(user?.id);
+async function AnalyticsWrapper({ userId }: { userId: string }) {
+  const data = await getDashboardData(userId);
   if (!data) {
     return <AnalyticsEmpty />;
   }

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Show, UserButton } from "@clerk/nextjs";
 import { Menu, X, Sun, Moon } from "lucide-react";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/lib/theme";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);

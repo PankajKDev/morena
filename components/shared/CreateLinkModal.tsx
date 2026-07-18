@@ -6,6 +6,7 @@ import { useProfile } from "@/components/shared/profile-context";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
+import { THEMEFALLBACK } from "@/constants";
 
 interface CreateLinkModalProps {
   open: boolean;
@@ -68,12 +69,15 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
         pageUrl: cleanedUrl,
         userId: user?.id,
         ownerUsername: user?.username,
+        customTheme: THEMEFALLBACK,
       }),
     });
 
     if (res.status === 409) {
       setLoading(false);
-      toast.error("A page with this URL or name already exists.", { id: toastId });
+      toast.error("A page with this URL or name already exists.", {
+        id: toastId,
+      });
       return;
     }
 

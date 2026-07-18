@@ -2,7 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { MappedLink } from "@/types";
 
 export async function POST(req: Request) {
-  const { linkPageName, pageUrl, userId, ownerUsername } = await req.json();
+  const { linkPageName, pageUrl, userId, ownerUsername, customTheme } =
+    await req.json();
 
   try {
     const existing = await prisma.pagelink.findFirst({
@@ -25,6 +26,7 @@ export async function POST(req: Request) {
         pageUrl,
         ownerId: userId,
         ownerUsername,
+        customTheme,
       },
     });
     return Response.json({ pageId: res.id }, { status: 200 });

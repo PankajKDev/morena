@@ -1,4 +1,4 @@
-import { CssDataState, ProfileDataState } from "@/types";
+import { CssDataState, ProfileCardTheme, ProfileDataState } from "@/types";
 import {
   Camera,
   Code,
@@ -61,4 +61,23 @@ export const SOCIAL_PLATFORMS: Record<
   "twitch.tv": { name: "Twitch", icon: Gamepad2, color: "#9146FF" },
   "spotify.com": { name: "Spotify", icon: Headphones, color: "#1DB954" },
   "t.me": { name: "Telegram", icon: Send, color: "#0088cc" },
+};
+
+export const THEMEFALLBACK: ProfileCardTheme = {
+  bodyBg: "#ffffff",
+  bodyBgBlur: 0,
+  bodyBgOpacity: 100,
+  profileBg: "#ffffff",
+  profileBgBlur: 0,
+  profileBgOpacity: 100,
+  textColor: "#000000",
+  headingColor: "#000000",
+  fontSize: 16,
+  nameFontSize: 24,
+  fontFamily: "sans-serif",
+  linkBg: "#000000",
+  linkBgBlur: 0,
+  linkBgOpacity: 100,
+  linkColor: "#000000",
+  linkFontFamily: "sans-serif",
 };

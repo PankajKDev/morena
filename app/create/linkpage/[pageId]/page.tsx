@@ -1,5 +1,6 @@
 import { Profile } from "@/components/shared/Profile";
 import { ProfileActions } from "@/components/shared/ProfileActions";
+import { Sidebar } from "@/components/shared/sidebar";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
@@ -22,10 +23,13 @@ async function Page({ params }: PageProps) {
   if (!page || page.ownerId !== userId) notFound();
 
   return (
-    <div className="h-full w-full">
-      <Profile />
+    <>
+      <Sidebar />
+      <div className="w-full h-full">
+        <Profile />
+      </div>
       <ProfileActions pageId={pageId} />
-    </div>
+    </>
   );
 }
 

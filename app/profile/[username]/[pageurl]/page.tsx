@@ -28,6 +28,7 @@ export async function generateMetadata({
   }
 
   return {
+    metadataBase: new URL(`${process.env.NEXT_BASE_URL}`),
     title: `${data.ownerUsername} | ${data.pageUrl}`,
     description: data.bio || `Check out ${data.ownerUsername}'s profile`,
     openGraph: {

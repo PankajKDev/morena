@@ -75,7 +75,7 @@ app/
   create/          — page editor (dynamic route by pageId)
   edit/            — edit existing page (dynamic route by pageId)
   profile/         — your public profile pages
-  api/             — API routes (create-link, click, links,webhooks)
+  api/             — API routes (create-page,analytics, links,webhooks)
 
 components/
   shared/          — Profile, ProfileCard, Sidebar, Analytics, Modals, etc.

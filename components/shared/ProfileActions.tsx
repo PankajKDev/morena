@@ -97,7 +97,7 @@ const ProfileActions = ({ pageId }: { pageId: string }) => {
       linkFontFamily: finalCss.linkFontFamily,
     };
 
-    const res = await fetch("/api/create-link", {
+    const res = await fetch("/api/create-page", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

@@ -14,18 +14,12 @@ async function page({ params }: PageProps) {
   const { pageId } = await params;
   const { userId } = await auth();
 
-  const page = await prisma.pagelink.findUnique({
-    where: { id: pageId },
-    select: { ownerId: true },
-  });
-
-  if (!page || page.ownerId !== userId) notFound();
-
   const data = await prisma.pagelink.findUnique({
     where: { id: pageId },
     include: { userlinks: true },
   });
-  if (!data) return notFound();
+
+  if (!data || data.ownerId !== userId) notFound();
 
   const cardData = {
     ...data,

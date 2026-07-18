@@ -59,7 +59,7 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
     setError("");
     const toastId = toast.loading("Creating your page...");
 
-    const res = await fetch("/api/create-link", {
+    const res = await fetch("/api/create-page", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -142,7 +142,7 @@ const ProfileCard = ({ data }: { data: ProfileCardData }) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => {
-                          fetch("/api/click", {
+                          fetch("/api/analytics", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({

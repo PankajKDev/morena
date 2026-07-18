@@ -2,6 +2,7 @@ import { ProfileHydrator } from "@/components/shared/ProfileHydrator";
 import { ProfileActions } from "@/components/shared/ProfileActions";
 import { prisma } from "@/lib/prisma";
 import { IProfileHydratorData, ProfileCardTheme } from "@/types";
+import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 
 type PageProps = {
@@ -11,6 +12,15 @@ type PageProps = {
 };
 async function page({ params }: PageProps) {
   const { pageId } = await params;
+  const { userId } = await auth();
+
+  const page = await prisma.pagelink.findUnique({
+    where: { id: pageId },
+    select: { ownerId: true },
+  });
+
+  if (!page || page.ownerId !== userId) notFound();
+
   const data = await prisma.pagelink.findUnique({
     where: { id: pageId },
     include: { userlinks: true },

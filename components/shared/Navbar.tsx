@@ -8,7 +8,7 @@ import { useTheme } from "next-themes";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
 
   const toggleTheme = () =>
     setTheme(resolvedTheme === "dark" ? "light" : "dark");

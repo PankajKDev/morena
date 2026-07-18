@@ -10,7 +10,7 @@ function layout({ children }: { children: React.ReactNode }) {
         <Sidebar />
         {children}
         <HomeButton />
-        <ProfileActions mode="POST" />
+        <ProfileActions />
       </ProfileProvider>
     </div>
   );

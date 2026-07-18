@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 const geistHeading = Geist({ subsets: ["latin"], variable: "--font-heading" });
 
 const notoSans = Noto_Sans({ subsets: ["latin"], variable: "--font-sans" });
@@ -48,6 +49,7 @@ export default function RootLayout({
         <body className="min-h-full flex flex-col">
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
+            <Toaster richColors />
           </ThemeProvider>
         </body>
         <Analytics />

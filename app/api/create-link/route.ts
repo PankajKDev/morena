@@ -2,46 +2,32 @@ import { prisma } from "@/lib/prisma";
 import { MappedLink } from "@/types";
 
 export async function POST(req: Request) {
-  const {
-    linkPageName,
-    displayName,
-    bio,
-    avatar,
-    pageUrl,
-    bodyBgImage,
-    profileBgImage,
-    linkBgImage,
-    userId,
-    music,
-    musicVolume,
-    ownerUsername,
-    customTheme,
-    links,
-  } = await req.json();
+  const { linkPageName, pageUrl, userId, ownerUsername } = await req.json();
 
   try {
+    const existing = await prisma.pagelink.findFirst({
+      where: {
+        OR: [{ pageUrl }, { linkPagename: linkPageName }],
+        ownerId: userId,
+      },
+    });
+
+    if (existing) {
+      return Response.json(
+        { message: "A page with this URL or name already exists." },
+        { status: 409 },
+      );
+    }
+
     const res = await prisma.pagelink.create({
       data: {
         linkPagename: linkPageName,
-        displayName,
-        bio,
         pageUrl,
-        avatar,
-        bodyBgImage,
-        profileBgImage,
-        linkBgImage,
         ownerId: userId,
         ownerUsername,
-        music,
-        musicVolume,
-        customTheme,
-        userlinks: {
-          create: links,
-        },
       },
     });
-    const pageId = res.id;
-    return Response.json({ pageId }, { status: 200 });
+    return Response.json({ pageId: res.id }, { status: 200 });
   } catch (error) {
     console.error("Create page error:", error);
 
@@ -56,6 +42,7 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   const {
+    pageId,
     linkPageName,
     displayName,
     pageUrl,
@@ -75,11 +62,12 @@ export async function PATCH(req: Request) {
   try {
     const res = await prisma.pagelink.update({
       where: {
+        id: pageId,
         ownerId: userId,
-        linkPagename: linkPageName,
-        pageUrl: pageUrl,
       },
       data: {
+        linkPagename: linkPageName,
+        pageUrl,
         displayName,
         bio,
         avatar,
@@ -100,8 +88,7 @@ export async function PATCH(req: Request) {
         },
       },
     });
-    const pageId = res.id;
-    return Response.json({ pageId }, { status: 200 });
+    return Response.json({ pageId: res.id }, { status: 200 });
   } catch (error) {
     console.error(error);
     return Response.json(

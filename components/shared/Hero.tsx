@@ -14,10 +14,10 @@ const Hero = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="max-w-4xl text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
+          <h1 className="max-w-4xl text-5xl font-bold tracking-tight leading-snug sm:text-6xl md:text-7xl">
             One link to <span className="text-primary italic">rule</span> them
             all. <br className="hidden md:block" />
-            <span className="bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
               Main character energy
             </span>{" "}
             only.

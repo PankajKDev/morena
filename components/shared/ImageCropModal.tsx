@@ -51,12 +51,12 @@ const ImageCropModal = ({
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="w-full max-w-lg rounded-3xl border border-white/10 bg-white/90 backdrop-blur-xl shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between p-4 border-b border-black/5">
+      <div className="w-full max-w-lg rounded-3xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden">
+        <div className="flex items-center justify-between p-4 border-b">
           <h2 className="text-lg font-bold tracking-tight">Adjust image</h2>
           <button
             onClick={onCancel}
-            className="size-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+            className="size-8 flex items-center justify-center rounded-full hover:bg-accent transition-colors"
           >
             <X size={18} />
           </button>
@@ -64,7 +64,7 @@ const ImageCropModal = ({
 
         <div className="p-4 space-y-4">
           <div
-            className="relative rounded-2xl overflow-hidden bg-black/5 flex items-center justify-center"
+            className="relative rounded-2xl overflow-hidden bg-muted flex items-center justify-center"
             style={{ aspectRatio: "4 / 3" }}
           >
             <NextImage
@@ -129,10 +129,10 @@ const ImageCropModal = ({
           </div>
         </div>
 
-        <div className="flex gap-3 p-4 border-t border-black/5">
+        <div className="flex gap-3 p-4 border-t">
           <button
             onClick={onCancel}
-            className="flex-1 px-4 py-2.5 rounded-xl border border-border bg-white text-foreground text-sm font-semibold transition-all duration-200 hover:bg-accent active:scale-[0.98]"
+            className="flex-1 px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm font-semibold transition-all duration-200 hover:bg-accent active:scale-[0.98]"
           >
             Use as is
           </button>

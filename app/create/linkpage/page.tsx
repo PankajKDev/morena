@@ -2,7 +2,7 @@ import { Profile } from "@/components/shared/Profile";
 
 function page() {
   return (
-    <div className="b h-full w-full">
+    <div className="h-full w-full">
       <Profile />
     </div>
   );

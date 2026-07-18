@@ -27,7 +27,7 @@ model Pagelink{
 id String @id @default(uuid())
 linkPagename String
 pageUrl String @unique
-displayName String
+displayName String?
 bio String?
 avatar String?
 bodyBgImage String?
@@ -35,8 +35,8 @@ profileBgImage String?
 music String?
 musicVolume Int?
 linkBgImage String?
-customTheme Json
-ownerUsername String
+customTheme Json?
+ownerUsername String?
 userlinks UserLink[]
 analytics Analytics[]
 creator User @relation(fields: [ownerId],references: [clerkId],onDelete: Cascade)

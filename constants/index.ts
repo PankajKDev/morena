@@ -35,6 +35,7 @@ export const CSS_DEFAULTS: CssDataState = {
 
 export const GENERAL_DEFAULTS: ProfileDataState = {
   linkPageName: "a very cool name",
+  pageId: null,
   pageUrl: "",
   displayName: "",
   avatar: null,

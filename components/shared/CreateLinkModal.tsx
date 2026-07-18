@@ -4,6 +4,8 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { useProfile } from "@/components/shared/profile-context";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
+import { toast } from "sonner";
 
 interface CreateLinkModalProps {
   open: boolean;
@@ -21,12 +23,15 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const setLinkPageName = useProfile((s) => s.setLinkPageName);
   const setPageUrl = useProfile((s) => s.setPageUrl);
+  const setPageId = useProfile((s) => s.setPageId);
+  const { user } = useUser();
 
   if (!open) return null;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const cleanedName = sanitize(name);
     const cleanedUrl = sanitize(url);
 
@@ -50,9 +55,38 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
       return;
     }
 
+    setLoading(true);
+    setError("");
+
+    const res = await fetch("/api/create-link", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        linkPageName: cleanedName,
+        pageUrl: cleanedUrl,
+        userId: user?.id,
+        ownerUsername: user?.username,
+      }),
+    });
+
+    if (res.status === 409) {
+      setLoading(false);
+      toast.error("A page with this URL or name already exists.");
+      return;
+    }
+
+    if (!res.ok) {
+      setLoading(false);
+      toast.error("Something went wrong. Please try again.");
+      return;
+    }
+
+    const data = await res.json();
+    setPageId(data.pageId);
     setLinkPageName(cleanedName);
     setPageUrl(cleanedUrl);
-    setError("");
     setName("");
     setUrl("");
     onClose();
@@ -106,15 +140,17 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
         <div className="flex gap-3 p-4 border-t">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm font-semibold transition-all duration-200 hover:bg-accent active:scale-[0.98]"
+            disabled={loading}
+            className="flex-1 px-4 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm font-semibold transition-all duration-200 hover:bg-accent active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none"
           >
             Cancel
           </button>
           <button
             onClick={handleSubmit}
-            className="flex-1 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
+            disabled={loading}
+            className="flex-1 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold transition-all duration-200 hover:brightness-110 active:scale-[0.98] disabled:opacity-50"
           >
-            Create
+            {loading ? "Creating..." : "Create"}
           </button>
         </div>
       </div>

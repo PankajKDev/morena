@@ -16,7 +16,7 @@ const CSS_IMAGE_FIELDS = [
   "linkBgImage",
 ] as const;
 
-const ProfileActions = ({ mode }: { mode: string }) => {
+const ProfileActions = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
   const router = useRouter();
@@ -98,11 +98,12 @@ const ProfileActions = ({ mode }: { mode: string }) => {
     };
 
     const res = await fetch("/api/create-link", {
-      method: mode,
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        pageId: finalProfile.pageId,
         linkPageName,
         pageUrl,
         displayName,

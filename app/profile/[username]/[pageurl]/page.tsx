@@ -47,10 +47,11 @@ export default async function page({ params }: PageProps) {
 
   if (!data) return notFound();
 
-  const cardData: ProfileCardData = {
+  const cardData = {
     ...data,
+    displayName: data.displayName ?? "",
     customTheme: data.customTheme as unknown as ProfileCardTheme,
-  };
+  } satisfies ProfileCardData;
   return (
     <div className="w-full h-full">
       <ProfileCard data={cardData} />

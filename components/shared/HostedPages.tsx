@@ -1,7 +1,7 @@
 interface HostedPage {
   pageUrl: string;
   linkPagename: string;
-  ownerUsername: string;
+  ownerUsername: string | null;
 }
 
 const HostedPages = ({ pages }: { pages: HostedPage[] }) => {
@@ -17,11 +17,11 @@ const HostedPages = ({ pages }: { pages: HostedPage[] }) => {
               {page.linkPagename}
             </p>
             <a
-              href={`${process.env.NEXT_BASE_URL}/profile/${page.ownerUsername}/${page.pageUrl}`}
+              href={`${process.env.NEXT_BASE_URL}/profile/${page.ownerUsername ?? "unknown"}/${page.pageUrl}`}
               className="group relative block rounded-2xl overflow-hidden border border-border shadow-lg"
             >
               <iframe
-                src={`${process.env.NEXT_BASE_URL}/profile/${page.ownerUsername}/${page.pageUrl}`}
+                src={`${process.env.NEXT_BASE_URL}/profile/${page.ownerUsername ?? "unknown"}/${page.pageUrl}`}
                 className="w-full aspect-video pointer-events-none"
                 title={page.linkPagename}
               />

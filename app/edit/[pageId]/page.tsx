@@ -1,4 +1,5 @@
 import { ProfileHydrator } from "@/components/shared/ProfileHydrator";
+import { ProfileActions } from "@/components/shared/ProfileActions";
 import { prisma } from "@/lib/prisma";
 import { IProfileHydratorData, ProfileCardTheme } from "@/types";
 import { notFound } from "next/navigation";
@@ -24,6 +25,7 @@ async function page({ params }: PageProps) {
   return (
     <div className="w-full min-h-screen">
       <ProfileHydrator data={cardData} />
+      <ProfileActions pageId={pageId} />
     </div>
   );
 }

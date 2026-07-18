@@ -26,7 +26,6 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
   const [loading, setLoading] = useState(false);
   const setLinkPageName = useProfile((s) => s.setLinkPageName);
   const setPageUrl = useProfile((s) => s.setPageUrl);
-  const setPageId = useProfile((s) => s.setPageId);
   const { user } = useUser();
 
   if (!open) return null;
@@ -57,6 +56,7 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
 
     setLoading(true);
     setError("");
+    const toastId = toast.loading("Creating your page...");
 
     const res = await fetch("/api/create-link", {
       method: "POST",
@@ -73,24 +73,24 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
 
     if (res.status === 409) {
       setLoading(false);
-      toast.error("A page with this URL or name already exists.");
+      toast.error("A page with this URL or name already exists.", { id: toastId });
       return;
     }
 
     if (!res.ok) {
       setLoading(false);
-      toast.error("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.", { id: toastId });
       return;
     }
 
     const data = await res.json();
-    setPageId(data.pageId);
+    toast.success("Page created!", { id: toastId });
     setLinkPageName(cleanedName);
     setPageUrl(cleanedUrl);
     setName("");
     setUrl("");
     onClose();
-    router.push("/create/linkpage");
+    router.push(`/create/linkpage/${data.pageId}`);
   };
 
   return (

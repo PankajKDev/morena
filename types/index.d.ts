@@ -116,7 +116,6 @@ export interface CssDataActions {
 }
 
 export interface ProfileDataState {
-  pageId: string | null;
   linkPageName: string;
   pageUrl: string;
   displayName: string;
@@ -128,7 +127,6 @@ export interface ProfileDataState {
 }
 
 export interface ProfileDataActions {
-  setPageId: (v: string | null) => void;
   setLinkPageName: (v: string) => void;
   setPageUrl: (v: string) => void;
   setDisplayName: (v: string) => void;

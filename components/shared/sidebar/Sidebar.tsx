@@ -40,8 +40,8 @@ const Sidebar = () => {
         }`}
       >
         <div className="flex flex-col h-full w-80 overflow-y-auto">
-          <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
-            <h2 className="text-lg font-bold tracking-tight">Settings</h2>
+          <div className="flex items-center justify-center p-4 border-b border-sidebar-border">
+            <h2 className="text-lg font-bold tracking-tight ">Settings</h2>
           </div>
 
           <div className="flex border-b border-sidebar-border">

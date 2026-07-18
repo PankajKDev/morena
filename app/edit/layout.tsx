@@ -1,5 +1,4 @@
 import { HomeButton } from "@/components/shared/HomeButton";
-import { ProfileActions } from "@/components/shared/ProfileActions";
 import { Sidebar } from "@/components/shared/sidebar";
 
 function layout({ children }: { children: React.ReactNode }) {
@@ -8,7 +7,6 @@ function layout({ children }: { children: React.ReactNode }) {
       <Sidebar />
       {children}
       <HomeButton />
-      <ProfileActions />
     </div>
   );
 }

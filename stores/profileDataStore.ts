@@ -12,7 +12,6 @@ type ProfileStore = ProfileDataState & ProfileDataActions;
 
 export const useProfileDataStore = create<ProfileStore>()((set) => ({
   ...GENERAL_DEFAULTS,
-  setPageId: (v) => void set({ pageId: v }),
   setLinkPageName: (v) => void set({ linkPageName: v }),
   setPageUrl: (v) => void set({ pageUrl: v }),
   setDisplayName: (v) => void set({ displayName: v }),

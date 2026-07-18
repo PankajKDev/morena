@@ -16,7 +16,7 @@ const CSS_IMAGE_FIELDS = [
   "linkBgImage",
 ] as const;
 
-const ProfileActions = () => {
+const ProfileActions = ({ pageId }: { pageId: string }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
   const router = useRouter();
@@ -103,7 +103,7 @@ const ProfileActions = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        pageId: finalProfile.pageId,
+        pageId,
         linkPageName,
         pageUrl,
         displayName,

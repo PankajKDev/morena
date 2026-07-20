@@ -1,7 +1,5 @@
-import Hero from "@/components/shared/Hero";
-import { Features } from "@/components/shared/Features";
-import { About } from "@/components/shared/About";
-import AnalyticsWrapper from "@/components/shared/AnalyticsWrapper";
+import { Hero, Features, About } from "@/components/shared/Home";
+import { AnalyticsWrapper } from "@/components/shared/Analytics";
 import { auth } from "@clerk/nextjs/server";
 
 export default async function Home() {

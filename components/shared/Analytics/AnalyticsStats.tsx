@@ -47,13 +47,17 @@ const AnalyticsStats = ({ data }: { data: AnalyticsDashboardData }) => {
             size="sm"
             className="relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
           >
-            <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient}`} />
+            <div
+              className={`absolute inset-0 bg-linear-to-br ${card.gradient}`}
+            />
             <CardContent className="relative z-10 p-4 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   {card.label}
                 </span>
-                <div className={`size-8 rounded-lg flex items-center justify-center ${card.iconColor} bg-background/60`}>
+                <div
+                  className={`size-8 rounded-lg flex items-center justify-center ${card.iconColor} bg-background/60`}
+                >
                   <Icon size={16} />
                 </div>
               </div>

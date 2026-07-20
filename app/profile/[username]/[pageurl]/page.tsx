@@ -1,13 +1,13 @@
-import { ProfileCard } from "@/components/shared/ProfileCard";
+import { ProfileCard } from "@/components/shared/Profile";
 import { prisma } from "@/lib/prisma";
-import { ProfileCardData, ProfileCardTheme } from "@/types";
+import type { ProfileCardData, ProfileCardTheme } from "@/types";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 type PageProps = {
-  params: {
+  params: Promise<{
     username: string;
     pageurl: string;
-  };
+  }>;
 };
 
 export async function generateMetadata({

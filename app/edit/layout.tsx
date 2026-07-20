@@ -1,4 +1,4 @@
-import { HomeButton } from "@/components/shared/HomeButton";
+import { HomeButton } from "@/components/shared/Editor";
 import { Sidebar } from "@/components/shared/sidebar";
 
 function layout({ children }: { children: React.ReactNode }) {

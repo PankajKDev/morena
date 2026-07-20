@@ -1,5 +1,4 @@
-import { Profile } from "@/components/shared/Profile";
-import { ProfileActions } from "@/components/shared/ProfileActions";
+import { Profile, ProfileActions } from "@/components/shared/Editor";
 import { Sidebar } from "@/components/shared/sidebar";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";

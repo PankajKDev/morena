@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { MappedLink } from "@/types";
+import type { MappedLink } from "@/types";
 
 export async function POST(req: Request) {
   const { linkPageName, pageUrl, userId, ownerUsername, customTheme } =

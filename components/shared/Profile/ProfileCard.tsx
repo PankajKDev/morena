@@ -8,7 +8,7 @@ import {
 } from "@/lib/styleutils";
 import { hexToRgba } from "@/lib/utils";
 import { detectSocialLink } from "@/lib/social";
-import { ProfileCardData } from "@/types";
+import type { ProfileCardData } from "@/types";
 import { Link as LinkIcon } from "lucide-react";
 import { ProfileMusicPlayer } from "./ProfileMusicPlayer";
 

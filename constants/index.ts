@@ -1,4 +1,4 @@
-import { CssDataState, ProfileCardTheme, ProfileDataState } from "@/types";
+import type { CssDataState, ProfileCardTheme, ProfileDataState } from "@/types";
 import {
   Camera,
   Code,

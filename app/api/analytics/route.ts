@@ -27,5 +27,5 @@ export async function POST(req: Request) {
     console.error("Analytics transaction failed:", err);
     return Response.json({ error: "failed" }, { status: 500 });
   }
-  return Response.json({ message: "success" }, { status: 302 });
+  return Response.json({ message: "success" }, { status: 200 });
 }

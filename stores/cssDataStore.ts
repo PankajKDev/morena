@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { fileToBase64 } from "@/lib/utils";
-import { CssDataActions, CssDataState } from "@/types";
+import type { CssDataActions, CssDataState } from "@/types";
 import { CSS_DEFAULTS } from "@/constants";
 
 type CssStore = CssDataState & CssDataActions;

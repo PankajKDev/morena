@@ -33,7 +33,7 @@ const ClicksChart = ({
         </div>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={config} className="max-h-[200px]">
+        <ChartContainer config={config} className="max-h-50">
           <AreaChart data={dailyClicks} accessibilityLayer margin={{ top: 4 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis
@@ -49,10 +49,7 @@ const ClicksChart = ({
               axisLine={false}
               allowDecimals={false}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent />}
-            />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Area
               dataKey="clicks"
               type="natural"

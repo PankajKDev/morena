@@ -2,14 +2,20 @@
 
 import Image from "next/image";
 import { User, Link as LinkIcon, X, Plus } from "lucide-react";
-import { useProfile } from "@/components/shared/profile-context";
+import { useProfileDataStore } from "@/stores/profileDataStore";
 import { fileToBase64 } from "@/lib/utils";
 
 const DetailsTab = () => {
   const {
-    displayName, avatar, bio, links,
-    setDisplayName, setAvatar, setBio, setLinks,
-  } = useProfile();
+    displayName,
+    avatar,
+    bio,
+    links,
+    setDisplayName,
+    setAvatar,
+    setBio,
+    setLinks,
+  } = useProfileDataStore();
 
   const addLink = () => {
     setLinks([...links, { name: "", url: "" }]);
@@ -18,8 +24,8 @@ const DetailsTab = () => {
   const updateLink = (index: number, field: "name" | "url", value: string) => {
     setLinks(
       links.map((link, i) =>
-        i === index ? { ...link, [field]: value } : link
-      )
+        i === index ? { ...link, [field]: value } : link,
+      ),
     );
   };
 
@@ -97,9 +103,7 @@ const DetailsTab = () => {
           </button>
         </div>
         {links.length === 0 && (
-          <p className="text-xs text-muted-foreground">
-            No links added yet.
-          </p>
+          <p className="text-xs text-muted-foreground">No links added yet.</p>
         )}
         {links.map((link, index) => (
           <div
@@ -114,16 +118,11 @@ const DetailsTab = () => {
               <X size={14} />
             </button>
             <div className="flex items-center gap-2">
-              <LinkIcon
-                size={14}
-                className="text-muted-foreground shrink-0"
-              />
+              <LinkIcon size={14} className="text-muted-foreground shrink-0" />
               <input
                 type="text"
                 value={link.name}
-                onChange={(e) =>
-                  updateLink(index, "name", e.target.value)
-                }
+                onChange={(e) => updateLink(index, "name", e.target.value)}
                 placeholder="Link name"
                 className="flex-1 px-2 py-1.5 rounded-lg border border-input bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all duration-200"
               />
@@ -131,9 +130,7 @@ const DetailsTab = () => {
             <input
               type="url"
               value={link.url}
-              onChange={(e) =>
-                updateLink(index, "url", e.target.value)
-              }
+              onChange={(e) => updateLink(index, "url", e.target.value)}
               placeholder="https://example.com"
               className="w-full px-2 py-1.5 rounded-lg border border-input bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all duration-200"
             />

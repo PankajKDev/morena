@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useProfile } from "@/components/shared/profile-context";
+import { useProfileDataStore } from "@/stores/profileDataStore";
 import { useCssDataStore } from "@/stores/cssDataStore";
 import { Link as LinkIcon } from "lucide-react";
 import {
@@ -13,7 +13,7 @@ import { hexToRgba } from "@/lib/utils";
 import { detectSocialLink } from "@/lib/social";
 
 const Profile = () => {
-  const { displayName, avatar, bio, links } = useProfile();
+  const { displayName, avatar, bio, links } = useProfileDataStore();
   const {
     bodyBg,
     bodyBgImage,

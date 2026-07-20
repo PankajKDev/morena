@@ -1,7 +1,7 @@
 "use client";
 
 import { useCssDataStore } from "@/stores/cssDataStore";
-import { ImageUpload } from "@/components/shared/ImageUpload";
+import { ImageUpload } from "@/components/shared/Editor";
 
 const FONT_OPTIONS = [
   { label: "Sans-serif", value: "sans-serif" },
@@ -12,14 +12,44 @@ const FONT_OPTIONS = [
 
 const CssTab = () => {
   const {
-    bodyBg, bodyBgImage, bodyBgBlur, bodyBgOpacity,
-    profileBg, profileBgImage, profileBgBlur, profileBgOpacity,
-    textColor, headingColor, fontSize, nameFontSize, fontFamily,
-    linkBg, linkBgImage, linkBgBlur, linkBgOpacity, linkColor, linkFontFamily,
-    setBodyBg, setBodyBgImage, setBodyBgBlur, setBodyBgOpacity,
-    setProfileBg, setProfileBgImage, setProfileBgBlur, setProfileBgOpacity,
-    setTextColor, setHeadingColor, setFontSize, setNameFontSize, setFontFamily,
-    setLinkBg, setLinkBgImage, setLinkBgBlur, setLinkBgOpacity, setLinkColor, setLinkFontFamily,
+    bodyBg,
+    bodyBgImage,
+    bodyBgBlur,
+    bodyBgOpacity,
+    profileBg,
+    profileBgImage,
+    profileBgBlur,
+    profileBgOpacity,
+    textColor,
+    headingColor,
+    fontSize,
+    nameFontSize,
+    fontFamily,
+    linkBg,
+    linkBgImage,
+    linkBgBlur,
+    linkBgOpacity,
+    linkColor,
+    linkFontFamily,
+    setBodyBg,
+    setBodyBgImage,
+    setBodyBgBlur,
+    setBodyBgOpacity,
+    setProfileBg,
+    setProfileBgImage,
+    setProfileBgBlur,
+    setProfileBgOpacity,
+    setTextColor,
+    setHeadingColor,
+    setFontSize,
+    setNameFontSize,
+    setFontFamily,
+    setLinkBg,
+    setLinkBgImage,
+    setLinkBgBlur,
+    setLinkBgOpacity,
+    setLinkColor,
+    setLinkFontFamily,
   } = useCssDataStore();
 
   return (

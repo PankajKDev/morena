@@ -1,4 +1,4 @@
-import { LinkPageCard } from "@/components/shared/LinkPageCard";
+import { LinkPageCard } from "@/components/shared/Links";
 
 function page() {
   return (

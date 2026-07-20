@@ -41,11 +41,24 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
       />
       <label
         className="relative flex items-center justify-center w-full h-20 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:opacity-90"
-        style={value ? {} : { border: "2px dashed var(--input)", background: "var(--background)" }}
+        style={
+          value
+            ? {}
+            : {
+                border: "2px dashed var(--input)",
+                background: "var(--background)",
+              }
+        }
       >
         {value ? (
           <>
-            <Image src={value} alt="" fill className="object-cover" unoptimized />
+            <Image
+              src={value}
+              alt=""
+              fill
+              className="object-cover"
+              unoptimized
+            />
             <button
               type="button"
               onClick={(e) => {

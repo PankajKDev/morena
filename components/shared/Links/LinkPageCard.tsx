@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Plus, ExternalLink, Edit3, Trash2 } from "lucide-react";
-import { CreateLinkModal } from "@/components/shared/CreateLinkModal";
+import { CreateLinkModal } from "@/components/shared/Links";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 

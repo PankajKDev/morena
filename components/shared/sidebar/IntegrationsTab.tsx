@@ -2,10 +2,11 @@
 
 import { useRef, useState } from "react";
 import { Music, Pause, Play, Trash2, Volume2 } from "lucide-react";
-import { useProfile } from "@/components/shared/profile-context";
+import { useProfileDataStore } from "@/stores/profileDataStore";
 
 const IntegrationsTab = () => {
-  const { music, musicVolume, setMusicFile, setMusicVolume } = useProfile();
+  const { music, musicVolume, setMusicFile, setMusicVolume } =
+    useProfileDataStore();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
 
@@ -55,7 +56,10 @@ const IntegrationsTab = () => {
                   Audio file loaded
                 </span>
                 <button
-                  onClick={() => { setMusicFile(null); setPlaying(false); }}
+                  onClick={() => {
+                    setMusicFile(null);
+                    setPlaying(false);
+                  }}
                   className="text-muted-foreground hover:text-destructive transition-colors shrink-0 ml-auto"
                   aria-label="Remove music"
                 >
@@ -98,7 +102,8 @@ const IntegrationsTab = () => {
             value={musicVolume}
             onChange={(e) => {
               setMusicVolume(Number(e.target.value));
-              if (audioRef.current) audioRef.current.volume = Number(e.target.value) / 100;
+              if (audioRef.current)
+                audioRef.current.volume = Number(e.target.value) / 100;
             }}
             className="w-full accent-primary cursor-pointer"
           />

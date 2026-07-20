@@ -42,10 +42,6 @@ export interface ProfileCardData {
   userlinks?: ProfileCardLink[];
 }
 
-export interface ProfileCardProps {
-  data?: ProfileCardData;
-}
-
 export type MappedLink = {
   name: string;
   url: string;

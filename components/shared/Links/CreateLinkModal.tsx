@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { X } from "lucide-react";
-import { useProfile } from "@/components/shared/profile-context";
+import { useProfileDataStore } from "@/stores/profileDataStore";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
@@ -25,8 +25,8 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const setLinkPageName = useProfile((s) => s.setLinkPageName);
-  const setPageUrl = useProfile((s) => s.setPageUrl);
+  const setLinkPageName = useProfileDataStore((s) => s.setLinkPageName);
+  const setPageUrl = useProfileDataStore((s) => s.setPageUrl);
   const { user } = useUser();
 
   if (!open) return null;

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { fileToBase64 } from "@/lib/utils";
-import { ProfileDataActions, ProfileDataState } from "@/types";
+import type { ProfileDataActions, ProfileDataState } from "@/types";
 import { GENERAL_DEFAULTS } from "@/constants";
 
 export interface LinkEntry {

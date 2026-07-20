@@ -1,14 +1,13 @@
-import { ProfileHydrator } from "@/components/shared/ProfileHydrator";
-import { ProfileActions } from "@/components/shared/ProfileActions";
+import { ProfileHydrator, ProfileActions } from "@/components/shared/Editor";
 import { prisma } from "@/lib/prisma";
-import { IProfileHydratorData, ProfileCardTheme } from "@/types";
+import type { IProfileHydratorData, ProfileCardTheme } from "@/types";
 import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     pageId: string;
-  };
+  }>;
 };
 async function page({ params }: PageProps) {
   const { pageId } = await params;

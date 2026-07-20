@@ -1,4 +1,4 @@
-import { ProfileNotFound } from "@/components/shared/ProfileNotFound";
+import { ProfileNotFound } from "@/components/shared/Profile";
 
 function page() {
   return (

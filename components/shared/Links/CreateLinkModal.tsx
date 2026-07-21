@@ -27,7 +27,6 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
   const [loading, setLoading] = useState(false);
   const setLinkPageName = useProfileDataStore((s) => s.setLinkPageName);
   const setPageUrl = useProfileDataStore((s) => s.setPageUrl);
-  const { user } = useUser();
 
   if (!open) return null;
 
@@ -67,8 +66,6 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
       body: JSON.stringify({
         linkPageName: cleanedName,
         pageUrl: cleanedUrl,
-        userId: user?.id,
-        ownerUsername: user?.username,
         customTheme: THEMEFALLBACK,
       }),
     });
@@ -98,7 +95,12 @@ const CreateLinkModal = ({ open, onClose }: CreateLinkModalProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div
+      className="fixed inset-0 z-100 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <div className="w-full max-w-md rounded-3xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden">
         <div className="flex items-center justify-between p-4 border-b">
           <h2 className="text-lg font-bold tracking-tight">Create link page</h2>

@@ -33,8 +33,14 @@ const ClicksChart = ({
         </div>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={config} className="max-h-50">
+        <ChartContainer config={config} className="w-full min-h-40">
           <AreaChart data={dailyClicks} accessibilityLayer margin={{ top: 4 }}>
+            <defs>
+              <linearGradient id="clicksFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="var(--color-clicks)" stopOpacity={0.3} />
+                <stop offset="100%" stopColor="var(--color-clicks)" stopOpacity={0.02} />
+              </linearGradient>
+            </defs>
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis
               dataKey="date"
@@ -48,15 +54,15 @@ const ClicksChart = ({
               tickMargin={8}
               axisLine={false}
               allowDecimals={false}
+              width={32}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Area
               dataKey="clicks"
-              type="natural"
+              type="monotone"
               stroke="var(--color-clicks)"
               strokeWidth={2.5}
-              fill="var(--color-clicks)"
-              fillOpacity={0.08}
+              fill="url(#clicksFill)"
               dot={false}
               activeDot={{ r: 5, strokeWidth: 2, stroke: "white" }}
             />

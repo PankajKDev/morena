@@ -6,8 +6,6 @@ export async function POST(req: NextRequest) {
   try {
     const evt = await verifyWebhook(req);
 
-    console.log(evt.type);
-
     switch (evt.type) {
       case "user.created": {
         const user = evt.data;

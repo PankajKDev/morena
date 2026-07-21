@@ -1,10 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import type { MappedLink } from "@/types";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { revalidateTag } from "next/cache";
 
 export async function POST(req: Request) {
-  const { linkPageName, pageUrl, userId, ownerUsername, customTheme } =
-    await req.json();
+  const { linkPageName, pageUrl, customTheme } = await req.json();
 
+  const { userId } = await auth();
+  const user = await currentUser();
+  if (!userId || !user?.username) {
+    return Response.json({ error: "Unauthorised" }, { status: 401 });
+  }
   try {
     const existing = await prisma.pagelink.findFirst({
       where: {
@@ -25,17 +31,17 @@ export async function POST(req: Request) {
         linkPagename: linkPageName,
         pageUrl,
         ownerId: userId,
-        ownerUsername,
+        ownerUsername: user?.username,
         customTheme,
       },
     });
+    revalidateTag("pages", { expire: 60 });
     return Response.json({ pageId: res.id }, { status: 200 });
   } catch (error) {
-    console.error("Create page error:", error);
-
+    console.error(error);
     return Response.json(
       {
-        message: error instanceof Error ? error.message : String(error),
+        message: "ERROR CREATING PAGE",
       },
       { status: 400 },
     );
@@ -53,14 +59,17 @@ export async function PATCH(req: Request) {
     bodyBgImage,
     profileBgImage,
     linkBgImage,
-    userId,
+
     music,
     musicVolume,
-    ownerUsername,
     customTheme,
     links,
   } = await req.json();
-
+  const { userId } = await auth();
+  const user = await currentUser();
+  if (!userId || !user?.username) {
+    return Response.json({ error: "Unauthorised" }, { status: 401 });
+  }
   try {
     const res = await prisma.pagelink.update({
       where: {
@@ -78,7 +87,7 @@ export async function PATCH(req: Request) {
         linkBgImage,
         music,
         musicVolume,
-        ownerUsername,
+        ownerUsername: user?.username,
         customTheme,
         userlinks: {
           deleteMany: {},
@@ -90,12 +99,13 @@ export async function PATCH(req: Request) {
         },
       },
     });
+    revalidateTag("pages", { expire: 60 });
     return Response.json({ pageId: res.id }, { status: 200 });
   } catch (error) {
     console.error(error);
     return Response.json(
       {
-        message: error instanceof Error ? error.message : String(error),
+        message: "encountered a server error",
       },
       { status: 400 },
     );

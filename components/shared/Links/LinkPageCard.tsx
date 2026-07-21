@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Plus, ExternalLink, Edit3, Trash2 } from "lucide-react";
 import { CreateLinkModal } from "@/components/shared/Links";
 import { useUser } from "@clerk/nextjs";
@@ -22,32 +22,11 @@ function formatDate(iso: string): string {
   });
 }
 
-const LinkPageCard = () => {
+const LinkPageCard = ({ initialPages }: { initialPages: LinkPage[] }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
-  const [pages, setPages] = useState<LinkPage[]>([]);
+  const [pages, setPages] = useState<LinkPage[]>(initialPages);
   const { user } = useUser();
-  const userId = user?.id;
-  useEffect(() => {
-    if (!userId) return;
-    async function fetchData() {
-      const res = await fetch("/api/links", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId }),
-      });
-      const json = await res.json();
-      console.log(json);
-      if (res.ok) {
-        const list = Array.isArray(json) ? json : (json?.res ?? []);
-        setPages(list);
-      }
-    }
-
-    fetchData();
-  }, [userId]);
 
   const handleDelete = async (pageId: string) => {
     const res = await fetch("/api/links", {
@@ -55,7 +34,7 @@ const LinkPageCard = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId, pageId }),
+      body: JSON.stringify({ pageId }),
     });
     if (res.ok) {
       setPages((prev) => prev.filter((p) => p.id !== pageId));

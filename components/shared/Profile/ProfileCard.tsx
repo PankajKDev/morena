@@ -90,6 +90,7 @@ const ProfileCard = ({ data }: { data: ProfileCardData }) => {
                     fill
                     className="object-cover"
                     unoptimized
+                    draggable={false}
                   />
                 ) : (
                   <div className="size-full flex items-center justify-center bg-linear-to-br from-muted to-muted/50 text-muted-foreground text-2xl font-bold">
@@ -150,7 +151,7 @@ const ProfileCard = ({ data }: { data: ProfileCardData }) => {
                               pageId: id,
                             }),
                           }).catch((e) => {
-                            console.log("error saving data", e);
+                            console.error("failed to save data");
                           });
                         }}
                         className="group relative flex items-center gap-3 w-full px-5 py-3.5 rounded-2xl border border-white/20 overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:shadow-xl active:scale-[0.98]"

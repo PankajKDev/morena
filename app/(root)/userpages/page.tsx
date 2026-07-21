@@ -1,5 +1,5 @@
 import { HostedPages } from "@/components/shared/HostedPages";
-import { prisma } from "@/lib/prisma";
+import { getCachedPages } from "@/lib/data";
 import { auth } from "@clerk/nextjs/server";
 
 async function page() {
@@ -11,9 +11,7 @@ async function page() {
       </div>
     );
   }
-  const data = await prisma.pagelink.findMany({
-    where: { ownerId: userId },
-  });
+  const data = await getCachedPages(userId);
   if (!data) {
     return (
       <div className="flex justify-center items-center">

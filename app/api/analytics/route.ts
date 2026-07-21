@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { userAgent } from "next/server";
 import { geolocation } from "@vercel/functions";
+import { revalidateTag } from "next/cache";
 export async function POST(req: Request) {
   const { linkId, pageId } = await req.json();
   const { browser, os, device } = userAgent(req);
@@ -27,5 +28,6 @@ export async function POST(req: Request) {
     console.error("Analytics transaction failed:", err);
     return Response.json({ error: "failed" }, { status: 500 });
   }
+  revalidateTag("pages", { expire: 60 });
   return Response.json({ message: "success" }, { status: 200 });
 }

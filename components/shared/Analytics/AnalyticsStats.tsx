@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { MousePointerClick, Layout, Trophy, Zap } from "lucide-react";
 import type { AnalyticsDashboardData } from "@/lib/analytics";
@@ -36,12 +37,19 @@ const cards = [
   },
 ];
 
-const AnalyticsStats = ({ data }: { data: AnalyticsDashboardData }) => {
+const AnalyticsStats = ({
+  data,
+  bestPageUrl,
+}: {
+  data: AnalyticsDashboardData;
+  bestPageUrl?: string;
+}) => {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {cards.map((card) => {
         const Icon = card.icon;
-        return (
+        const href = card.label === "Total pages" ? "/userpages" : card.label === "Best page" ? bestPageUrl : undefined;
+        const content = (
           <Card
             key={card.label}
             size="sm"
@@ -66,6 +74,13 @@ const AnalyticsStats = ({ data }: { data: AnalyticsDashboardData }) => {
               </p>
             </CardContent>
           </Card>
+        );
+        return href ? (
+          <Link key={card.label} href={href}>
+            {content}
+          </Link>
+        ) : (
+          content
         );
       })}
     </div>

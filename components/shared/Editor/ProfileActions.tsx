@@ -18,7 +18,6 @@ const CSS_IMAGE_FIELDS = [
 
 const ProfileActions = ({ pageId }: { pageId: string }) => {
   const [loading, setLoading] = useState(false);
-  const { user } = useUser();
   const router = useRouter();
   const resetProfile = useProfileDataStore((s) => s.reset);
   const resetCss = useCssDataStore((s) => s.reset);
@@ -114,8 +113,6 @@ const ProfileActions = ({ pageId }: { pageId: string }) => {
         linkBgImage,
         music,
         musicVolume,
-        userId: user?.id,
-        ownerUsername: user?.username,
         customTheme,
         links,
       }),
